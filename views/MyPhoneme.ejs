@@ -10,47 +10,44 @@ const ChapterSchema = new mongoose.Schema({
 const Chapter = mongoose.model("Chapter", ChapterSchema);
 module.exports = Chapter; -->
 
-    <div style="height:100vh;" class="container">
-        <div class="container text-light display-3 text-center">
-            <%= chapterDetails.phoneme %>
-        </div>
-        <div class=" d-flex flex-row">
-            
-            <% if(chapterDetails.unplay.length!=0){ %>
-
-                <% chapterDetails.unplay.forEach(unp=>{ %>
-                    <% const parsed=JSON.parse(unp.ULdata.reply || '{}' ); %>
-                    
-
-                        <div class="card" style="width: 18rem; flex: 0 0 auto;">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= parsed["Level Name"] %>
-                                </h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    <%= parsed["Fantasy Prompt"] %>
-                                </h6>
-                                <p class="card-text">
-                                    <%= parsed["Speech Exercise"] %>
-                                </p>
-                                <form action="/realtime/<%= chapterDetails.user_id %>" method="get" style="display: inline;">
-                                    <input type="hidden" name="text" value="<%= parsed['Speech Exercise'] %>">
-                                    <input type="hidden" name="phoneme" value="<%= chapterDetails.phoneme %>">
-                                    <button type="submit" class="btn btn-link">Go to Realtime</button>
-                                  </form>
-                                
-                            </div>
-                        </div>
-                    
-                        <% })} %>
-
-        </div>
-        <div class="container">
-            <% for (let l of chapterDetails.levels){ %>
-                <div>
-
-                </div>
-                <% } %>
-        </div>
-
+<div style="height:100vh;" class="container">
+    <div class="container text-light display-3 text-center">
+      <%= chapterDetailss.phoneme %>
     </div>
+  
+    <div class="d-flex flex-row flex-wrap gap-3">
+  
+      <% if (chapterDetailss.levels.length !== 0) { %>
+        <% chapterDetailss.levels.forEach(ply => { %>
+          <div class="card" style="width: 18rem; flex: 0 0 auto;">
+            <div class="card-body">
+              <h5 class="card-title"><%= ply.Ldata.reply["Level Name"] %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= ply.Ldata.reply["Fantasy Prompt"] %></h6>
+              <p class="card-text"><%= ply.Ldata.reply["Speech Exercise"] %></p>
+              <p>rate: <%= ply.rate %> | score: <%= ply.score %></p>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+  
+      <% if (chapterDetailss.unplay.length !== 0) { %>
+        <% chapterDetailss.unplay.forEach(unp => { %>
+          <div class="card" style="width: 18rem; flex: 0 0 auto;">
+            <div class="card-body">
+              <h5 class="card-title"><%= unp.ULdata.reply["Level Name"] %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= unp.ULdata.reply["Fantasy Prompt"] %></h6>
+              <p class="card-text"><%= unp.ULdata.reply["Speech Exercise"] %></p>
+  
+              <form action="/realtime/<%= chapterDetailss.user_id %>" method="get" style="display: inline;">
+                <input type="hidden" name="text" value="<%= unp.ULdata.reply['Speech Exercise'] %>">
+                <input type="hidden" name="phoneme" value="<%= chapterDetailss.phoneme %>">
+                <button type="submit" class="btn btn-link">Go to Realtime</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+  
+    </div>
+  </div>
+  

@@ -275,35 +275,60 @@ app.get("/results/:id", async (req, res) => {
 });
 
 
-app.post('/level/:phoneme/:id', async (req, res) => {
+app.post('/level/:exercise/:id', async (req, res) => {
     try {
-        const {phoneme, id } = req.params;
+        const {exercise, id } = req.params;//userid
         const { totalN_best } = req.body;
         console.log("total Nbest", totalN_best);
         //ispe aye hai toh matlab wo level khel liya hai 
         //toh level array mein push karo aur unplay mein se usse pop karo phir assessment ko bhi daalo
         const user= await User.findById(id).populate('chapters');
-        const lvl= await Unplay.findOne({user_id:id,phoneme:phoneme});
+        const lvl = await Unplay.findOne({
+            user_id: id,
+            "ULdata.reply.Speech Exercise":exercise
+          });
+        // const lvl= await Unplay.findOne({user_id:id,ULdata.reply["Speech Exercise"]});
+        console.log("lvl played : ",lvl)
         
-        const ch = user.chapters.find(chap=>{
-            
-            return chap.phoneme=== phoneme;
-        })
         
-        console.log("ch variable in /level/phoneme.id:",ch);
-        const playedlvl = new Level({ chapter_id:ch._id ,user_id: id, phoneme: phoneme,  difficulty: lvl.difficulty, Ldata:lvl.ULdata,Assessment:{ date:new Date(),data:totalN_best} });//left field to fill score
+        
+        const playedlvl = new Level({ chapter_id:lvl.chapter_id ,user_id: id, phoneme: lvl.phoneme,  difficulty: lvl.difficulty, Ldata:lvl.ULdata,Assessment:{ date:new Date(),data:totalN_best} });//left field to fill score
         
         await playedlvl.save();
-        res.json({ message: "Data saved successfully!", redirect: `/results/${phoneme}/${playedlvl.id}` });// to save score,rate=> yha se socho aage
+        console.log(playedlvl)
+        res.json({ message: "Data saved successfully!", redirect: `/results/${lvl.phoneme}/${playedlvl.id}` });// to save score,rate=> yha se socho aage
     } catch (error) {
         res.status(500).json({ error: "Failed to save data", details: error });
     }
 });
 
+async function manageLevel(phoneme, difficulty) {
+    try {
+        const response = await axios.post('https://fbc3-34-27-196-57.ngrok-free.app/chat', {
+            user_input: `Generate a Level Name, Fantasy Prompt, and Speech Exercise for targetted phoneme '${phoneme}' and difficulty '${difficulty}'`
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return { error: null, data: response.data };
+    } catch (err) {
+        console.error("manageLevel error:", err.message);
+        return { error: err, data: null };
+    }
+}
+
+async function addunplay (data, chapterDetails,difficulty){
+    const newunpl = new Unplay({chapter_id:chapterDetails._id, user_id: chapterDetails.user_id, phoneme: chapterDetails.phoneme,difficulty:difficulty, ULdata:data });
+    await newunpl.save();
+    console.log(`initial level Created:`, newunpl);
+    await Chapter.findByIdAndUpdate(chapterDetails._id, { $push: { unplay: newunpl._id } }, { new: true });
+                
+}
 app.get("/results/:phoneme/:id", async (req, res) => {
-    const {phoneme, id } = req.params;
-    console.log("ID in index:", id);
-    console.log("Type of ID:", typeof id);
+    const {phoneme, id } = req.params;//id used here is of level 
+    
     const { score, rate } = await fetchDatalvl(id,phoneme);
     console.log("score,rate",score," ",rate);
     
@@ -317,6 +342,103 @@ app.get("/results/:phoneme/:id", async (req, res) => {
         },
         { new: true } // return the updated document
     );
+    
+    console.log("cutie")
+    //delete this played level from unplay array of chapter document and make new level based on rate of this level
+    const level = await Level.findById(id);
+    const chapter_id= level.chapter_id;
+    const user_id = level.user_id;
+    const speechex= level.Ldata;
+    const ratee = level.rate;
+    console.log(chapter_id, user_id,speechex,ratee)
+    const chapp = await Chapter.findById(chapter_id);
+    await Chapter.findByIdAndUpdate(chapp._id, { $push: { levels: updatedLevel._id } }, { new: true });
+    const unplayToRemove = await Unplay.findOne({
+        chapter_id: chapter_id,
+        user_id: user_id,
+        ULdata: speechex
+    });
+    
+    // Step 2: If found, remove it from the chapter's unplay array
+    if (unplayToRemove) {
+        const chapter = await Chapter.findByIdAndUpdate(
+            chapter_id,
+            {
+                $pull: {
+                    unplay: unplayToRemove._id
+                }
+            },
+            { new: true } // return updated chapter
+        );
+        console.log("Updated Chapter:", chapter);
+    } else {
+        console.log("No matching Unplay document found.");
+    }
+    //creating new level based on rate 
+    console.log("xxxxxxxx")
+    const chapterDetails = await Chapter.findById(chapter_id).populate('levels').populate('unplay');
+    console.log("rrrrrrrrr::::",chapterDetails)
+    let data = null;
+
+    if (ratee=="L"){
+        const { error, data: levelData } = await manageLevel(chapterDetails.phoneme, "Easy");
+                
+      
+        console.log("data:::", data);
+        if (error || !levelData || !levelData.reply) {
+            console.error("Failed to fetch or parse level:", error);
+     
+          }
+  
+          // Parse reply string to an object
+          const parsedData = {
+            ...levelData,
+            reply: JSON.parse(levelData.reply)
+          };
+  
+        await addunplay(parsedData,chapterDetails,"Easy");
+    }
+    if (ratee=="M"){
+        const { error, data: levelData } = await manageLevel(chapterDetails.phoneme, "Medium");
+                
+        console.log("data:::", data);
+        if (error || !levelData || !levelData.reply) {
+            console.error("Failed to fetch or parse level:", error);
+     
+          }
+  
+          // Parse reply string to an object
+          const parsedData = {
+            ...levelData,
+            reply: JSON.parse(levelData.reply)
+          };
+  
+        await addunplay(parsedData,chapterDetails,"Easy");
+    }
+    if (ratee=="W"){
+        const { error, data: levelData } = await manageLevel(chapterDetails.phoneme, "Hard");
+                
+        console.log("data:::", data);
+        if (error || !levelData || !levelData.reply) {
+            console.error("Failed to fetch or parse level:", error);
+     
+          }
+   
+          // Parse reply string to an object
+          const parsedData = {
+            ...levelData,
+            reply: JSON.parse(levelData.reply)
+          };
+  
+        await addunplay(parsedData,chapterDetails,"Easy");
+    }
+    const chapterDetailss = await Chapter.findById(chapter_id).populate('levels').populate('unplay');
+
+    console.log("chaptterDetailss(populated): ",chapterDetailss,"chapterDetailss.unplay.length",chapterDetailss.unplay.length)
+    console.dir(chapterDetailss.unplay[0].ULdata, { depth: null });
+    console.dir(chapterDetailss.levels[0].Ldata, { depth: null });
+ 
+    res.render('MyPhoneme', { chapterDetailss,encodeURIComponent});
 
     
 });
@@ -379,61 +501,97 @@ app.get('/chapter/:username', async (req, res) => {
 //     }
 // };
 
-async function manageLevel(phoneme, difficulty) {
-    try {
-        const response = await axios.post('https://a09c-34-27-21-76.ngrok-free.app/chat', {
-            user_input: `Generate a level for phoneme '${phoneme}' and difficulty '${difficulty}'`
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
 
-        return { error: null, data: response.data };
-    } catch (err) {
-        console.error("manageLevel error:", err.message);
-        return { error: err, data: null };
-    }
-}
+// app.get('/chapter/:username/:phoneme', async (req, res) => {
+//     try {
+//         const { username, phoneme } = req.params;
+//         const user = await User.findOne({ username }).populate('chapters');
 
+//         if (!user) return res.status(404).json({ message: "User not found" });
 
+//         const matchingChapter = user.chapters.find(chapter => chapter.phoneme === phoneme);
+//         if (!matchingChapter) return res.status(404).json({ message: "Chapter not found" });
+
+//         const chapterDetails = await Chapter.findById(matchingChapter._id).populate('levels').populate('unplay');
+
+//         let data = null;
+
+//         if (chapterDetails.levels.length === 0 && chapterDetails.unplay.length === 0 ) {
+//             console.log("hey krishna hey");
+//             for(let i=0;i<3;i++){
+
+//                 const { error, data: levelData } = await manageLevel(chapterDetails.phoneme, "Easy");
+                
+//                 if (!error) data = levelData;
+//                 console.log("data:::", data);
+//                 await addunplay(data,chapterDetails,"Easy");
+                
+//             }
+
+//         }
+//         const chapterDetailss = await Chapter.findById(matchingChapter._id).populate('levels').populate('unplay');
+
+//         console.log("chaptterDetailss(populated): ",chapterDetailss,"chapterDetailss.unplay.length",chapterDetailss.unplay.length)
+//         res.render('MyPhoneme', { chapterDetailss,encodeURIComponent});
+//     } catch (error) {
+//         console.error("Error fetching chapter:", error);
+//         res.status(500).json({ message: "Internal Server Error" });
+//     }
+// });
 app.get('/chapter/:username/:phoneme', async (req, res) => {
     try {
-        const { username, phoneme } = req.params;
-        const user = await User.findOne({ username }).populate('chapters');
-
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        const matchingChapter = user.chapters.find(chapter => chapter.phoneme === phoneme);
-        if (!matchingChapter) return res.status(404).json({ message: "Chapter not found" });
-
-        const chapterDetails = await Chapter.findById(matchingChapter._id).populate('levels').populate('unplay');
-
-        let data = null;
-
-        if (chapterDetails.levels.length === 0 && chapterDetails.unplay.length === 0 ) {
-            console.log("hey krishna hey");
-            for(let i=0;i<3;i++){
-
-                const { error, data: levelData } = await manageLevel(chapterDetails.phoneme, "Easy");
-                if (!error) data = levelData;
-                console.log("data:::", data);
-                const newunpl = new Unplay({chapter_id:chapterDetails._id, user_id: chapterDetails.user_id, phoneme: chapterDetails.phoneme,difficulty:"Easy", ULdata:data });
-                await newunpl.save();
-                console.log(`initial level Created:`, newunpl);
-                const chapterDetails =await Chapter.findByIdAndUpdate(chapterDetails._id, { $push: { unplay: newunpl._id } }, { new: true });
-                
-            }
-
+      const { username, phoneme } = req.params;
+  
+      // Step 1: Find the user and their chapters
+      const user = await User.findOne({ username }).populate('chapters');
+      if (!user) return res.status(404).json({ message: "User not found" });
+  
+      // Step 2: Find the matching chapter by phoneme
+      const matchingChapter = user.chapters.find(chapter => chapter.phoneme === phoneme);
+      if (!matchingChapter) return res.status(404).json({ message: "Chapter not found" });
+  
+      // Step 3: Load full chapter details
+      const chapterDetails = await Chapter.findById(matchingChapter._id)
+        .populate('levels')
+        .populate('unplay');
+  
+      // Step 4: If no levels or unplay levels exist, generate 3 easy levels
+      if (chapterDetails.levels.length === 0 && chapterDetails.unplay.length === 0) {
+        console.log("No levels found — generating new unplay levels...");
+  
+        for (let i = 0; i < 3; i++) {
+          const { error, data: levelData } = await manageLevel(chapterDetails.phoneme, "Easy");
+  
+          if (error || !levelData || !levelData.reply) {
+            console.error("Failed to fetch or parse level:", error);
+            continue;
+          }
+  
+          // Parse reply string to an object
+          const parsedData = {
+            ...levelData,
+            reply: JSON.parse(levelData.reply)
+          };
+  
+          // Save the parsed level
+          await addunplay(parsedData, chapterDetails, "Easy");
         }
-        console.log("chaptterDetails(populated): ",chapterDetails,"chapterDetails.unplay.length",chapterDetails.unplay.length)
-        res.render('MyPhoneme', { chapterDetails,encodeURIComponent});
+      }
+  
+      // Step 5: Reload chapter after adding levels
+      const chapterDetailss = await Chapter.findById(matchingChapter._id)
+        .populate('levels')
+        .populate('unplay');
+  
+      console.log("Chapter (with levels):", chapterDetailss);
+      res.render('MyPhoneme', { chapterDetailss, encodeURIComponent });
+  
     } catch (error) {
-        console.error("Error fetching chapter:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+      console.error("Error fetching chapter:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
-});
-
+  });
+  
 
 
 

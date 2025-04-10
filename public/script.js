@@ -90,7 +90,7 @@ async function sendDataToBackendinit(totalN_best) {
 async function sendDataToBackendlevel(totalN_best) {
     try {
         const unvis_phoneme= document.getElementById('unvis-phoneme').innerHTML;
-        const response = await fetch(`/level/${unvis_phoneme}/${unvis_id}`, {
+        const response = await fetch(`/level/${referenceText}/${unvis_id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
