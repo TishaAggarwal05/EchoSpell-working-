@@ -1,0 +1,46 @@
+<% layout('layout/boilerplate') %>
+  <div class="text-center container">
+    <H1 style="color: #ffffff;">
+      YOUR QUESTS
+    </H1>
+  </div>
+
+  <div class="container mt-5">
+    <div>
+      <div id="container">
+        <div class="chapter-scroll-container">
+          <div class="d-flex flex-row">
+            <% for (let ch of user.chapters) { %>
+              <div class="chapter mx-5 chapter-card position-relative text-white">
+                <img src="/images/book.png" alt="Book" class="chapter-img">
+                <div class="overlay">
+                  <h5 class="phoneme-text"><%= ch.phoneme.trim() %></h5> <!-- Trim spaces -->
+                </div>
+              </div>
+            <% } %>
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+    const chapters = document.querySelectorAll('.chapter');
+  
+    chapters.forEach(chapter => {
+      const pnameRaw = chapter.querySelector('.phoneme-text').textContent;
+      console.log(`RAW pname: [${pnameRaw}]`);
+  
+      const pname = pnameRaw.trim();
+      console.log(`TRIMMED pname: [${pname}]`);
+  
+      chapter.addEventListener('click', () => {
+        const currentPath = window.location.pathname;
+        console.log(`Redirecting to: ${currentPath}/${pname}`);
+        window.location.href = `${currentPath}/${pname.trim()}`;
+      });
+    });
+  </script>
+  

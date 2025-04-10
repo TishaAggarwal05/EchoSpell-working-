@@ -1,0 +1,106 @@
+.chapter-scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .chapter-scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .chapter-scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .chapter-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .chapter-card {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .chapter-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .chapter-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .phoneme-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+    color:black;
+    border-radius:50%;
+    
+  }
+  .stats-scroll-container {
+    display: flex;
+    gap: 15px; /* Space between boxes */
+    overflow-x: auto;
+    padding: 15px;
+    white-space: nowrap;
+  }
+  
+  .stats-scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .stats-scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .stats-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .stats-box {
+    flex: 0 0 auto;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    text-align: center;
+  }
+  
+  .stat-item {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .stat-item:last-child {
+    background-color: #28a745;
+    margin-bottom: 0;
+  }
+  

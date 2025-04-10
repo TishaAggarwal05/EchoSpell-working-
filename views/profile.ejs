@@ -1,0 +1,48 @@
+<% layout('layout/boilerplate') %>
+
+    <div class="container profile-scroll">
+        <h2 class="scroll-title">🧙‍♂️ Adventurer’s Scroll</h2>
+        <div class="scroll-line">
+            <span class="scroll-label">Username:</span>
+            <span class="scroll-value">
+                <%= user.username %>
+            </span>
+        </div>
+        <div class="scroll-line">
+            <span class="scroll-label">Guardian:</span>
+            <span class="scroll-value">
+                <%= user.parent %>
+            </span>
+        </div>
+        <div class="scroll-line">
+            <span class="scroll-label">Magic Mail:</span>
+            <span class="scroll-value">
+                <%= user.email %>
+            </span>
+        </div>
+    </div>
+
+
+    <div>
+        <h2 class="latest-scores-title">LATEST LEVEL SCORES</h2>
+        <div class="container chapter-wrapper">
+
+            <% for(let ch of user.chapters) { %>
+                <div class="chapter-card">
+                    <div class="chapter-phoneme">
+                        <%= ch.phoneme %>: <%= ch.currentAccur %>
+                    </div>
+                    <div class="chapter-levels">
+                        Levels played: <%= ch.levels.length %>
+                    </div>
+                </div>
+                <% } %>
+
+        </div>
+    </div>
+
+    <div class="container enter-btn-container">
+        <button class="btn btn-ultra-voilet" onclick="window.location.href='/chapter/<%= user.username %>'">
+            Enter The school of Wonders
+        </button>
+    </div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .alert-success { background-color: lightgreen; color: green; }
+        .alert-error { background-color: lightcoral; color: red; }
+    </style>
+</head>
+
+<body>
+    <% if (messages.error && messages.error.length > 0) { %>
+        <div class="alert alert-error">
+            <%= messages.error[0] %>
+        </div>
+    <% } %>
+    
+    <% if (messages.success && messages.success.length > 0) { %>
+        <div class="alert alert-success">
+            <%= messages.success[0] %>
+        </div>
+    <% } %>
+
+    <form action="/user/new" method="POST">
+        <label>Username:</label>
+        <input type="text" name="username" value="<%= formData.username || '' %>" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="<%= formData.email || '' %>" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <label>Parent Name:</label>
+        <input type="text" name="parent" value="<%= formData.parent || '' %>" required>
+
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/login">already registered?: LOGIN</a>
+</body>
+
+</html>

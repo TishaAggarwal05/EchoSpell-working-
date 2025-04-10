@@ -1,0 +1,54 @@
+<% layout('layout/boilerplate') %>
+
+
+    <div class="mt-2 mb-4 container d-flex flex-column">
+        <div>
+            user: <%=user.username %>
+
+        </div>
+        <div>
+            gaurdian: <%= user.parent %>
+
+
+        </div>
+        <div>
+            email: <%= user.email %>
+
+        </div>
+    </div>
+    <div>
+        <H2>LATEST LEVEL SCORES</H2>
+        <div class="mt-3 mb-5 container d-flex flex-row flex-wrap">
+
+            <% for(let ch of user.chapters ){ %>
+                <div class="mx-4"
+                    style="background-color: #f8f9fa; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 250px; text-align: center;">
+
+                    <div class="mx-3"
+                        style="background-color: #007bff; color: white; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-weight: bold;">
+                        <%= ch.phoneme %>: <%= ch.currentAccur %>
+                    </div>
+
+                    <div
+                        style="background-color: #28a745; color: white; padding: 10px; border-radius: 8px; font-weight: bold;">
+                        Levels played: <%= ch.levels.length %>
+                    </div>
+
+                </div>
+                <% } %>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- <button class="btn-ultra-violet" onclick="window.location.href='/chapter/${user.username}'"> -->
+    <div class="text-center container">
+        <button class="btn btn-ultra-voilet" onclick="window.location.href='/chapter/<%= user.username %>'">Enter The
+            school of Wonders</button>
+    </div>
+
+
+
+    </button>

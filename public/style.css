@@ -1,0 +1,87 @@
+* {
+    font-family: "Cinzel", serif;
+}
+
+body {
+    background: radial-gradient(circle at top, rgba(20, 10, 40, 0.8), rgba(5, 5, 15, 1)), 
+                radial-gradient(circle at bottom right, rgba(30, 60, 120, 0.5), transparent);
+    background-color: #05050f; 
+    color: white;
+}
+
+.btn-ultra-violet {
+    background: linear-gradient(to right, #b478c3, #472b85);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-ultra-violet:hover {
+    --box-shadow-color: rgba(132, 74, 178, 0.9);
+    box-shadow: 0 0 15px var(--box-shadow-color);
+    transform: scale(1.05);
+}
+
+.word {
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.word.glow {
+    color: #ffcc00; /* Glowing yellow */
+    text-shadow: 0px 0px 10px #ffcc00;
+}
+
+
+
+.trans-inp {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Soft white border */
+    padding: 4px;
+    
+    color: white; /* Text color */
+    outline: none;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Focus Effect */
+.trans-inp:focus {
+    border-color: #f1c40f; /* Golden highlight on focus */
+    box-shadow: 0px 0px 10px rgba(241, 196, 15, 0.5);
+}
+
+/* Placeholder Styling */
+.trans-inp::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    
+}
+.cinzel-first {
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 700px;
+    font-style: normal;
+}
+
+
+
+.about-boxes {
+    
+    background: rgba(198, 170, 234, 0.1); /* Transparent effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Soft border */
+    border-radius: 15px; /* Rounded edges */
+    padding: 20px;
+    width: 80vw;
+    margin:auto;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Glow effect */
+    backdrop-filter: blur(10px); /* Glass effect */
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.alert-error { background-color: lightcoral; color: red; }

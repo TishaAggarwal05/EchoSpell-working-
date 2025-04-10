@@ -1,0 +1,56 @@
+<% layout('layout/boilerplate') %>
+    <!-- const mongoose = require('mongoose');
+const ChapterSchema = new mongoose.Schema({
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  phoneme: String,
+  currentAccur: Number,
+  levels: [{ type: mongoose.Schema.Types.ObjectId, ref: "Level" }],
+  unplay: [{ type: mongoose.Schema.Types.ObjectId, ref: "Unplay" }]
+});
+const Chapter = mongoose.model("Chapter", ChapterSchema);
+module.exports = Chapter; -->
+
+    <div style="height:100vh;" class="container">
+        <div class="container text-light display-3 text-center">
+            <%= chapterDetails.phoneme %>
+        </div>
+        <div class=" d-flex flex-row">
+            
+            <% if(chapterDetails.unplay.length!=0){ %>
+
+                <% chapterDetails.unplay.forEach(unp=>{ %>
+                    <% const parsed=JSON.parse(unp.ULdata.reply || '{}' ); %>
+                    
+
+                        <div class="card" style="width: 18rem; flex: 0 0 auto;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= parsed["Level Name"] %>
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <%= parsed["Fantasy Prompt"] %>
+                                </h6>
+                                <p class="card-text">
+                                    <%= parsed["Speech Exercise"] %>
+                                </p>
+                                <form action="/realtime/<%= chapterDetails.user_id %>" method="get" style="display: inline;">
+                                    <input type="hidden" name="text" value="<%= parsed['Speech Exercise'] %>">
+                                    <input type="hidden" name="phoneme" value="<%= chapterDetails.phoneme %>">
+                                    <button type="submit" class="btn btn-link">Go to Realtime</button>
+                                  </form>
+                                
+                            </div>
+                        </div>
+                    
+                        <% })} %>
+
+        </div>
+        <div class="container">
+            <% for (let l of chapterDetails.levels){ %>
+                <div>
+
+                </div>
+                <% } %>
+        </div>
+
+    </div>

@@ -1,0 +1,17 @@
+<% layout('layout/boilerplate') %>
+
+<% if (messages.error && messages.error.length > 0) { %>
+    <div class="alert alert-error">
+        <%= messages.error[0] %>
+    </div>
+<% } %>
+
+<form action="/login" method="POST">
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+</form>
