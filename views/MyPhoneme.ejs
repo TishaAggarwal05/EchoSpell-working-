@@ -1,19 +1,22 @@
 <% layout('layout/boilerplate') %>
-    <!-- const mongoose = require('mongoose');
-const ChapterSchema = new mongoose.Schema({
-  user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  phoneme: String,
-  currentAccur: Number,
-  levels: [{ type: mongoose.Schema.Types.ObjectId, ref: "Level" }],
-  unplay: [{ type: mongoose.Schema.Types.ObjectId, ref: "Unplay" }]
-});
-const Chapter = mongoose.model("Chapter", ChapterSchema);
-module.exports = Chapter; -->
-
+ 
 <div style="height:100vh;" class="container">
-    <div class="container text-light display-3 text-center">
-      <%= chapterDetailss.phoneme %>
+  <div class="container text-light display-3 text-center d-flex justify-content-center align-items-center gap-3">
+    <%= chapterDetailss.phoneme %>
+    <button class="btn btn-info rounded-circle text-white fw-bold" 
+            style="width: 35px; height: 35px; font-size: 20px; padding: 0;" 
+            onclick="togglePopup()">i</button>
+  </div>
+  
+  <div id="popupDialog">
+    <div class="popup-box">
+      <h5>guidence for <%= guidence.phoneme %></h5>
+      <p>"<%= guidence.guide %>".</p>
+      <h5>visual Aid</h5>
+      <div><img src="/mouthmove/<%= guidence.phoneme %>.jpg" alt="Phoneme Image"></div>
+      <button class="btn btn-sm btn-secondary" onclick="togglePopup()">Close</button>
     </div>
+  </div>
   
     <div class="d-flex flex-row flex-wrap gap-3">
   
@@ -50,4 +53,10 @@ module.exports = Chapter; -->
   
     </div>
   </div>
+  <script>
+    function togglePopup() {
+      const popup = document.getElementById("popupDialog");
+      popup.style.display = popup.style.display === "none" ? "flex" : "none";
+    }
+  </script>
   
