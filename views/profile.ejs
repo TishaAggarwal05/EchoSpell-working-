@@ -104,6 +104,8 @@
 
 
 </style>
+<%- include('layout/partials/navprofile') %>
+<section id="detail">
     <div class="container profile-scroll" style="margin-top: 5%;" >
         <h2 class="scroll-title">🧙‍♂️ Adventurer’s Scroll</h2>
         <div class="scroll-line">
@@ -183,6 +185,8 @@
             Enter The school of Wonders
         </button>
     </div>
+    </section>
+    <%}%>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const graphData = <%- JSON.stringify(chapterGraphs) %>;
