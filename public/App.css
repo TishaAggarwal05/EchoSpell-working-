@@ -10,6 +10,8 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   font-family: "Cinzel Decorative", serif;
+  background-blend-mode: overlay;
+  background-color: rgba(50, 30, 70, 0.3);
 }
 html {
   scroll-behavior: smooth;

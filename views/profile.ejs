@@ -1,15 +1,111 @@
 <% layout('layout/boilerplate') %>
+<style>
 
-    <div class="container profile-scroll">
+.donut-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 20px;
+    border-radius: 20px;
+    margin: 15px;
+    box-shadow: 0 8px 20px rgba(122, 76, 190, 0.3);
+    transition: background 0.6s ease, transform 0.3s ease;
+    color: white;
+    width: 180px;
+    }
+.donut-card:hover {
+    background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(238, 174, 202, 0.2));
+    transform: scale(1.02);
+    box-shadow: 0 12px 25px rgba(122, 76, 190, 0.4);
+}
+.donut {
+  --size: 120px;
+  --stroke-width: 12px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: conic-gradient(
+    #9b59b6 calc(var(--percentage) * 1%),
+    #2c2c2c 0
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.donut::before {
+  content: '';
+  position: absolute;
+  width: calc(var(--size) - var(--stroke-width) * 2);
+  height: calc(var(--size) - var(--stroke-width) * 2);
+  background: #1a1a1a;
+  border-radius: 50%;
+  z-index: 1;
+}
+.chart-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+.donut-label {
+  z-index: 2;
+  text-align: center;
+  color: white;
+}
+.phoneme-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e0c3ff;
+}
+
+.accuracy-text {
+  font-size: 14px;
+  color: #d6d6d6;
+}
+
+.magic-btn {
+    margin-top: 10px;
+    display: inline-block;
+    background: linear-gradient(45deg, #591972, #2b0b3a);
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0 0 20px #c1a3ce;
+  }
+
+  .magic-btn:hover {
+    box-shadow: 0 0 20px #372649, 0 0 40px #2a1035;
+    transform: scale(1.05);
+    text-decoration: none;         /* <-- prevents underline on hover too */
+    color: white; 
+  }
+
+  .chart-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(122, 76, 190, 0.3);
+  border-radius: 20px;
+}
+
+.chart-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+
+</style>
+    <div class="container profile-scroll" style="margin-top: 5%;" >
         <h2 class="scroll-title">🧙‍♂️ Adventurer’s Scroll</h2>
-
-        <div class="scroll-line">
-            <span class="scroll-label">Name:</span>
-            <span class="scroll-value">
-                <%= user.realname %>
-            </span>
-        </div>
-
         <div class="scroll-line">
             <span class="scroll-label">Username:</span>
             <span class="scroll-value">
@@ -36,23 +132,27 @@
         <div class="container chapter-wrapper">
 
             <% for(let ch of user.chapters) { %>
-                <div class="chapter-card">
-                    <div class="chapter-phoneme">
-                        <%= ch.phoneme %>: <%= ch.currentAccur %>
-                    </div>
-                    <div class="chapter-levels">
-                        Levels played: <%= ch.levels.length %>
-                    </div>
+                <div class="chapter-card donut-card">
+                  <div class="donut" style="--percentage:<%= ch.currentAccur %>">
+                    <div class="donut-label">
+                        <span class="phoneme-text"><%= ch.phoneme %></span><br>
+                        <span class="accuracy-text"><%= ch.currentAccur %>%</span>
+                      </div>
+                  </div>
+                  <div class="chapter-levels">
+                    Levels played: <%= ch.levels.length %>
+                  </div>
                 </div>
-                <% } %>
+              <% } %>
+              
 
         </div>
     </div>
     <h2 class="latest-scores-title">PROGRESS</h2>
     <div class="container  py-4">
-        <div class="chart-wrapper">
+        <div class="chart-wrapper" style="padding: 3%;">
           <% chapterGraphs.forEach((graph, index) => { %>
-            <div class="chart-card p-3 mx-2">
+            <div class="chart-card p-3 mx-2" style="border: 2px solid #984bcf; border-radius: 10px;">
               <h5 class="text-center text-theme mb-3"><%= graph.phoneme.toUpperCase() %> Accuracy</h5>
               <canvas id="chart-<%= index %>" style="width: 100%; height: auto;"></canvas>
             </div>
@@ -63,7 +163,7 @@
       
 
     <div class="container enter-btn-container">
-        <button class="btn btn-ultra-voilet" onclick="window.location.href='/chapter/<%= user.username %>'">
+        <button class="btn btn-ultra-voilet" style="margin-bottom: 5%;" onclick="window.location.href='/chapter/<%= user.username %>'">
             Enter The school of Wonders
         </button>
     </div>
@@ -81,23 +181,41 @@
                 label: graph.phoneme + ' Scores',
                 data: graph.scores,
                 fill: false,
-                borderColor: '#E0B0FF',  // line color
+                borderColor: '#E0B0FF',
                 backgroundColor: '#4B007D33',
                 tension: 0.3,
                 pointRadius: 5
               }]
             },
-            
             options: {
-              
               responsive: true,
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
               scales: {
+                x: {
+                  ticks: {
+                    color: '#ffffff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
                 y: {
                   beginAtZero: true,
-                  max: 100
+                  max: 100,
+                  ticks: {
+                    color: '#ffffff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
                 }
               }
             }
           });
         });
       </script>
+      
