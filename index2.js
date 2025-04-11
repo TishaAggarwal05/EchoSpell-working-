@@ -247,7 +247,7 @@ app.post('/level/:exercise/:id', async (req, res) => {
 
 async function generLevel(phoneme, difficulty) {
     try {
-        const response = await axios.post('https://fbc3-34-27-196-57.ngrok-free.app/chat', {
+        const response = await axios.post('https://0133-35-201-142-81.ngrok-free.app/chat', {
             user_input: `Generate a Level Name, Fantasy Prompt, and Speech Exercise for targetted phoneme '${phoneme}' and difficulty '${difficulty}'`
         }, {
             headers: {
@@ -255,17 +255,8 @@ async function generLevel(phoneme, difficulty) {
             }
         });
         console.log("data:::", response.data);
-        if (error || !response.data || !response.data.reply) {
-            console.error("Failed to fetch or parse level:", error);
-     
-          }
-  
-          // Parse reply string to an object
-          const parsedData = {
-            ...response.data,
-            reply: JSON.parse(response.data.reply)
-          };
-        return { error: null, data: parsedData};
+        
+        return { error: null, data: response.data};
     } catch (err) {
         console.error("generLevel error:", err.message);
         return { error: err, data: null };
@@ -332,16 +323,46 @@ app.get("/lvlresult/:id", async (req, res) => {
 
     if (ratee=="L"){
         const { error, data} = await generLevel(chapterDetails.phoneme, "Easy");
+        if (error || !data || !data.reply) {
+            console.error("Failed to fetch or parse level:", error);
+     
+          }
   
-        await addunplay(data,chapterDetails,"Easy");
+          // Parse reply string to an object
+          const parsedData = {
+            ...data,
+            reply: JSON.parse(data.reply)
+          };
+  
+        await addunplay(parsedData,chapterDetails,"Easy");
     }
     if (ratee=="M"){
         const { error, data} = await generLevel(chapterDetails.phoneme, "Medium");
-        await addunplay(data,chapterDetails,"Medium");
+        if (error || !data || !data.reply) {
+            console.error("Failed to fetch or parse level:", error);
+     
+          }
+  
+          // Parse reply string to an object
+          const parsedData = {
+            ...data,
+            reply: JSON.parse(data.reply)
+          };
+        await addunplay(parsedData,chapterDetails,"Medium");
     }
     if (ratee=="W"){
         const { error, data} = await generLevel(chapterDetails.phoneme, "Hard"); 
-        await addunplay(data,chapterDetails,"Hard");
+        if (error || !data || !data.reply) {
+            console.error("Failed to fetch or parse level:", error);
+     
+          }
+  
+          // Parse reply string to an object
+          const parsedData = {
+            ...data,
+            reply: JSON.parse(data.reply)
+          };
+        await addunplay(parsedData,chapterDetails,"Hard");
     }
     const chapterDetailss = await Chapter.findById(chapter_id).populate('levels').populate('unplay');
 

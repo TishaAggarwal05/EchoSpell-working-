@@ -63,11 +63,16 @@ const processPhonemes = (data,phonemez,difficulty) => {
     }
 
     console.log("Average Accuracy for Each Phoneme:", avgPhonemeAccuracy);
-    const threshold=50;
+    let threshold=50;
     if (difficulty==="Easy"){threshold=40;}
     else if(difficulty==="Medium"){threshold=65;}
     else{
         threshold= 75;
+    }
+    
+    const length = Object.keys(avgPhonemeAccuracy).length;
+    if (length===0){
+        return { score: 80,  rate:"W"};
     }
     const rate = rateByThreshold(avgPhonemeAccuracy, threshold, phonemez);
     return { score: avgPhonemeAccuracy[phonemez],  rate };

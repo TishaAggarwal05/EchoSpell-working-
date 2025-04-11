@@ -27,16 +27,7 @@ const UserSchema = new mongoose.Schema({
     },
     password: { type: String, required: true }, // Store hashed password
     chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chapter" }],
-    progress: {
-        lastLevel: String,
-        lastChapter: { type: mongoose.Schema.Types.ObjectId, ref: "Chapter" },
-        phonemeAccuracy: {
-            initialAccuracy: Object, // { phoneme: initial accuracy percentage }
-            cumulativeAccuracy: Object, // { phoneme: cumulative accuracy percentage }
-            latestLevelScore: Object, // { phoneme: latest level score percentage }
-            improvementPercentage: Object // { phoneme: improvement percentage compared to initial }
-        }
-    }
+    
 });
 
 
