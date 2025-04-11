@@ -8,7 +8,7 @@
         <!-- Scrollable text container -->
         <div id="scrollContainer" style="height: 40px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; width: 90%;">
             <% if(initial === true){ %>
-                <p id="referenceText">young wizard named <%= user.username %> jumps over the hollow wall by casting a strange spell</p>
+                <p id="referenceText">young wizard named <%= user.realname%> jumps over the hollow wall by casting a strange spell</p>
             <% } else { %>
                 <p style="display:none;" id="unvis-phoneme"><%=phoneme%></p>
                 <p id="referenceText"><%= text %></p>

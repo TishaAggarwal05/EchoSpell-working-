@@ -30,6 +30,10 @@
     <% } %>
 
     <form action="/signup" method="POST">
+
+        <label>Full Name:</label>
+        <input type="text" name="realname" value="<%= formData.realname || '' %>" required>
+
         <label>Username:</label>
         <input type="text" name="username" value="<%= formData.username || '' %>" required>
 
@@ -41,6 +45,8 @@
 
         <label>Parent Name:</label>
         <input type="text" name="parent" value="<%= formData.parent || '' %>" required>
+
+        
 
         <button type="submit">Submit</button>
     </form>

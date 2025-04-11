@@ -123,7 +123,7 @@ app.get('/signup', (req, res) => {
 });
 // Handle POST request for user registration
 app.post('/signup', async (req, res) => {
-    const { username, parent, email, password } = req.body;
+    const {realname, username, parent, email, password } = req.body;
 
 
     try {
@@ -143,7 +143,7 @@ app.post('/signup', async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newUser = new User({ username, parent, email, password: hashedPassword });
+        const newUser = new User({ realname, username, parent, email, password: hashedPassword });
         await newUser.save();
 
         req.flash("success", "User registered successfully!");

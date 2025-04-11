@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema({
       required:[true,"name is required.."],
       unique: [true,"provide a unique username its already taken"]
     },
+    realname: {type:String},
     parent:{
       type:String,
       required:[true,"parent name is required.."]
