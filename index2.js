@@ -24,6 +24,7 @@ const Level = require('./models/levels.js');
 const fetchData = require('./extract.js'); // function for assessment of json data
 const fetchDatalvl = require('./extractlvl.js'); // function for lvl assessment of json data
 const Phoneme = require('./models/phoneme');
+const Guide = require('./models/guide');
 
 
 
@@ -343,8 +344,9 @@ app.get("/lvlresult/:id", async (req, res) => {
     const chapterDetailss = await Chapter.findById(chapter_id).populate('levels').populate('unplay');
 
     console.log("chaptterDetailss(populated): ",chapterDetailss,"chapterDetailss.unplay.length",chapterDetailss.unplay.length)
-
-    res.render('MyPhoneme', { chapterDetailss,encodeURIComponent});
+    const guidence = await Guide.findOne({phoneme:chapterDetails.phoneme})
+    console.log(guidence)
+    res.render('MyPhoneme', { chapterDetailss,guidence,encodeURIComponent});
 
     
 });
@@ -401,7 +403,9 @@ app.get('/chapter/:username/:phoneme', async (req, res) => {
         .populate('unplay');
   
       console.log("Chapter (with levels):", chapterDetailss);
-      res.render('MyPhoneme', { chapterDetailss, encodeURIComponent });
+      const guidence = await Guide.findOne({phoneme:chapterDetailss.phoneme})
+      console.log(guidence)
+      res.render('MyPhoneme', { chapterDetailss,guidence, encodeURIComponent });
   
     } catch (error) {
       console.error("Error fetching chapter:", error);
