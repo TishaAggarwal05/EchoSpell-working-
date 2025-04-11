@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 const Level = require("./models/levels");
 
-const fetchDatalvl = async (id, phonemez) => {
+const fetchDatalvl = async (id, phonemez,difficulty) => {
     try {
         console.log("meow:",id)
         const userId = new mongoose.Types.ObjectId(id);
         const Data= await Level.findById(userId)
         console.log("extract mein Data:",Data) 
-        return processPhonemes(Data.Assessment.data,phonemez); // Pass Data directly
+        return processPhonemes(Data.Assessment.data,phonemez,difficulty); // Pass Data directly
     } catch (err) {
         console.error("Error fetching data:", err);
         throw err; // Re-throw error to be caught in the route handler
     }
 };
 
-const processPhonemes = (data,phonemez) => {
+const processPhonemes = (data,phonemez,difficulty) => {
     let phonemeData = {}; // Store phoneme accuracy values
 
     console.log("type:", typeof data);
@@ -63,10 +63,13 @@ const processPhonemes = (data,phonemez) => {
     }
 
     console.log("Average Accuracy for Each Phoneme:", avgPhonemeAccuracy);
-    // const lowAccur=rateByThreshold(avgPhonemeAccuracy, 40); // variable threshold hona ciye 
-    // const score = avgPhonemeAccuracy.phonemez;
-    // return {score, avgPhonemeAccuracy }
-    const rate = rateByThreshold(avgPhonemeAccuracy, 40, phonemez);
+    const threshold=50;
+    if (difficulty==="Easy"){threshold=40;}
+    else if(difficulty==="Medium"){threshold=65;}
+    else{
+        threshold= 75;
+    }
+    const rate = rateByThreshold(avgPhonemeAccuracy, threshold, phonemez);
     return { score: avgPhonemeAccuracy[phonemez],  rate };
 };
 

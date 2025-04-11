@@ -296,7 +296,7 @@ app.post('/level/:exercise/:id', async (req, res) => {
         
         await playedlvl.save();
         console.log(playedlvl)
-        res.json({ message: "Data saved successfully!", redirect: `/results/${lvl.phoneme}/${playedlvl.id}` });// to save score,rate=> yha se socho aage
+        res.json({ message: "Data saved successfully!", redirect: `/results/${lvl.difficulty}/${lvl.phoneme}/${playedlvl.id}` });// to save score,rate=> yha se socho aage
     } catch (error) {
         res.status(500).json({ error: "Failed to save data", details: error });
     }
@@ -326,10 +326,10 @@ async function addunplay (data, chapterDetails,difficulty){
     await Chapter.findByIdAndUpdate(chapterDetails._id, { $push: { unplay: newunpl._id } }, { new: true });
                 
 }
-app.get("/results/:phoneme/:id", async (req, res) => {
-    const {phoneme, id } = req.params;//id used here is of level 
+app.get("/results/:difficulty/:phoneme/:id", async (req, res) => {
+    const {difficulty, phoneme, id } = req.params;//id used here is of level 
     
-    const { score, rate } = await fetchDatalvl(id,phoneme);
+    const { score, rate } = await fetchDatalvl(id,phoneme,difficulty);
     console.log("score,rate",score," ",rate);
     
     const updatedLevel = await Level.findByIdAndUpdate(
@@ -343,7 +343,7 @@ app.get("/results/:phoneme/:id", async (req, res) => {
         { new: true } // return the updated document
     );
     
-    console.log("cutie")
+    
     //delete this played level from unplay array of chapter document and make new level based on rate of this level
     const level = await Level.findById(id);
     const chapter_id= level.chapter_id;
