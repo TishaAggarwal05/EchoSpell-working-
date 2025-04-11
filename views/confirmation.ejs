@@ -1,12 +1,77 @@
 <% layout('layout/boilerplate') %>
-<div class="container">
-    <h1>CONGRATS!! Be Ready to begin a new Journey!!</h1>
-    <div class="container text-center">
-        <img style="height:50%;" src="/images/wizard.png" alt="">
-    </div>
-    <div class="container text-center">
-        <a href="/user/profile/<%=id%>">show profile</a>
-    </div>
 
-    
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: url("/images/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Cinzel Decorative', cursive;
+    background-blend-mode: overlay;
+    background-color: rgba(50, 30, 70, 0.5);
+    color: white;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .magic-container {
+    height: 90vh;
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.2); /* light transparent glass */
+
+  }
+
+  @keyframes flicker {
+    0% { box-shadow: 0 0 20px #bb99ff, 0 0 40px #5e3ab3 inset; }
+    50% { box-shadow: 0 0 30px #c5a3ff, 0 0 60px #7040d3 inset; }
+    100% { box-shadow: 0 0 20px #bb99ff, 0 0 40px #5e3ab3 inset; }
+  }
+
+  .wizard-img {
+    width: 250px;
+    margin: 10px auto;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px #ffffff); /* golden glow */
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .magic-btn {
+    margin-top: 20px;
+    display: inline-block;
+    background: linear-gradient(45deg, #591972, #2b0b3a);
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0 0 20px #c1a3ce;
+  }
+
+  .magic-btn:hover {
+    box-shadow: 0 0 20px #372649, 0 0 40px #2a1035;
+    transform: scale(1.05);
+    text-decoration: none;         /* <-- prevents underline on hover too */
+    color: white; 
+  }
+</style>
+
+<div class="magic-container" style="margin-top: 5%;" >
+  <h1>✨ Welcome to Your Magical Journey! ✨</h1>
+  <img class="wizard-img" src="/images/wizard.png" alt="Wizard">
+  <p>You've unlocked a new realm of learning. Are you ready to master your spells?</p>
+  <a class="magic-btn" href="/user/profile/<%= id %>">Enter The School of Wonders</a>
 </div>
