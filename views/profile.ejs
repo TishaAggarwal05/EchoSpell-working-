@@ -48,9 +48,56 @@
 
         </div>
     </div>
+    <h2 class="latest-scores-title">PROGRESS</h2>
+    <div class="container  py-4">
+        <div class="chart-wrapper">
+          <% chapterGraphs.forEach((graph, index) => { %>
+            <div class="chart-card p-3 mx-2">
+              <h5 class="text-center text-theme mb-3"><%= graph.phoneme.toUpperCase() %> Accuracy</h5>
+              <canvas id="chart-<%= index %>" style="width: 100%; height: auto;"></canvas>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    
+      
 
     <div class="container enter-btn-container">
         <button class="btn btn-ultra-voilet" onclick="window.location.href='/chapter/<%= user.username %>'">
             Enter The school of Wonders
         </button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const graphData = <%- JSON.stringify(chapterGraphs) %>;
+      
+        graphData.forEach((graph, i) => {
+          const ctx = document.getElementById(`chart-${i}`).getContext('2d');
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: graph.labels,
+              datasets: [{
+                label: graph.phoneme + ' Scores',
+                data: graph.scores,
+                fill: false,
+                borderColor: '#E0B0FF',  // line color
+                backgroundColor: '#4B007D33',
+                tension: 0.3,
+                pointRadius: 5
+              }]
+            },
+            
+            options: {
+              
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100
+                }
+              }
+            }
+          });
+        });
+      </script>

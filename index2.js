@@ -23,6 +23,7 @@ const Chapter = require('./models/chapters.js');
 const Level = require('./models/levels.js');
 const fetchData = require('./extract.js'); // function for assessment of json data
 const fetchDatalvl = require('./extractlvl.js'); // function for lvl assessment of json data
+const generateGraphDataForUser = require('./graph.js'); // function for graph generation
 const Phoneme = require('./models/phoneme');
 const Guide = require('./models/guide');
 
@@ -203,7 +204,7 @@ app.get("/results/:id", async (req, res) => {
     for (const arr of lowAccur) {
         const phoneme = arr[0];
         const score = arr[1];
-        const newCh = new Chapter({ user_id: userId, phoneme: phoneme, currentAccur: score });
+        const newCh = new Chapter({ user_id: userId, phoneme: phoneme, initialAccur: score, currentAccur: score });
         await newCh.save();
         await User.findByIdAndUpdate(userId, { $push: { chapters: newCh._id } }, { new: true });//adding info of chapter in user collection too
     }
@@ -215,8 +216,9 @@ app.get('/user/profile/:id', async (req, res) => {
     console.log("Fetching profile for user id:", id);
     const { lowAccur, avgPhonemeAccuracy } = await fetchData(id);
     const user = await User.findOne({ _id: id }).populate('chapters');
-    console.log(user);
-    res.render('profile', { user, avgPhonemeAccuracy });
+    const chapterGraphs = await generateGraphDataForUser(id);
+
+    res.render('profile', { user, avgPhonemeAccuracy, chapterGraphs });
 });
 
 app.post('/level/:exercise/:id', async (req, res) => {
@@ -237,7 +239,7 @@ app.post('/level/:exercise/:id', async (req, res) => {
         await playedlvl.save();
         console.log(playedlvl)
 
-        res.json({ message: "Data saved successfully!", redirect: `/lvlresult/${playedlvl.id}?difficulty=${lvl.difficulty}&phoneme=${lvl.phoneme}` });// to save score,rate=> yha se socho aage
+        res.json({ message: "Data saved successfully!", redirect: `/lvlresult/${playedlvl.id}?difficulty=${lvl.difficulty}&phoneme=${lvl.phoneme}` });// to save score,rate
     } catch (error) {
         res.status(500).json({ error: "Failed to save data", details: error });
     }
@@ -302,7 +304,7 @@ app.get("/lvlresult/:id", async (req, res) => {
     const speechex= level.Ldata;
     const ratee = level.rate;
     const chapp = await Chapter.findById(chapter_id);
-    await Chapter.findByIdAndUpdate(chapp._id, { $push: { levels: updatedLevel._id } }, { new: true });
+    await Chapter.findByIdAndUpdate(chapp._id, { $push: { levels: updatedLevel._id } ,$set: { currentAccur:score }}, { new: true });
     const unplayToRemove = await Unplay.findOne({
         chapter_id: chapter_id,
         user_id: user_id,

@@ -15,3 +15,42 @@
     max-width: 400px; 
     text-align: center;
   }
+
+
+  /* style for graph */
+  .chart-wrapper {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .chart-card {
+    background: rgba(31, 24, 46, 0.6); /* dark translucent background */
+    border: 2px solid rgba(138, 43, 226, 0.6); /* glowing purple border */
+    border-radius: 1.5rem;
+    padding: 2rem 2rem 1.5rem;
+    margin-right: 1.5rem;
+    min-width: 500px;
+    max-width: 520px;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); /* purple glow */
+    backdrop-filter: blur(10px); /* glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  
+  
+  
+  .chart-card:last-child {
+    margin-right: 0;
+  }
+  
+  .text-theme {
+    color: #E0B0FF;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+  }
+  
