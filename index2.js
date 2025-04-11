@@ -172,10 +172,10 @@ app.get('/realtime/:id', async(req, res) => {
     
     if(req.query.text){
         const {text,phoneme}= req.query;
-        res.render('realtime2',{id,text,phoneme,initial:false})//lvl assessment
+        res.render('realtime2',{userid:id,id,text,phoneme,initial:false})//lvl assessment
     }else{
         const user= await User.findOne({_id:id})
-        res.render('realtime2', { id, initial:true,user}); // initial assessment
+        res.render('realtime2', {userid:id, id, initial:true,user}); // initial assessment
     }
     
 });
@@ -369,7 +369,7 @@ app.get("/lvlresult/:id", async (req, res) => {
     console.log("chaptterDetailss(populated): ",chapterDetailss,"chapterDetailss.unplay.length",chapterDetailss.unplay.length)
     const guidence = await Guide.findOne({phoneme:chapterDetails.phoneme})
     console.log(guidence)
-    res.render('MyPhoneme', { chapterDetailss,guidence,encodeURIComponent});
+    res.render('MyPhoneme', {userid:chapterDetailss.user_id, chapterDetailss,guidence,encodeURIComponent});
 
     
 });
@@ -378,7 +378,7 @@ app.get('/chapter/:username', async (req, res) => {
     const { username } = req.params;
     const user = await User.findOne({ username: username }).populate('chapters');
     console.log("USER:::",user);
-    res.render('MyChapter', { user })
+    res.render('MyChapter', {userid:user._id, user })
 })
 app.get('/chapter/:username/:phoneme', async (req, res) => {
     try {
@@ -428,7 +428,7 @@ app.get('/chapter/:username/:phoneme', async (req, res) => {
       console.log("Chapter (with levels):", chapterDetailss);
       const guidence = await Guide.findOne({phoneme:chapterDetailss.phoneme})
       console.log(guidence)
-      res.render('MyPhoneme', { chapterDetailss,guidence, encodeURIComponent });
+      res.render('MyPhoneme', { userid:chapterDetailss.user_id,chapterDetailss,guidence, encodeURIComponent });
   
     } catch (error) {
       console.error("Error fetching chapter:", error);

@@ -1,0 +1,45 @@
+<style>
+    .navbar {
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
+      min-height: 50px;
+    }
+    
+    .navbar-brand {
+      font-size: 1.25rem; /* shrink brand text */
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    
+    .navbar-nav .nav-link {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+    
+    .btn-small-custom {
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      border-radius: 6px;
+    }
+    </style>
+    
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-transparent navbar-glass ">
+        <a class="navbar-brand text-warning" href="/">EchoSpell<span class="sr-only">(current)</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link text-light" href="#detail">User Info</a>
+            <a class="nav-item nav-link text-light" href="#latest-score">Latest Scores</a>
+            <a class="nav-item nav-link text-light" href="#progress">Progress</a>
+            <a class="nav-item nav-link text-light" href="#play">Play</a>
+          </div>
+          <div class="d-flex ml-auto">
+            
+            <a href="/signup" class="btn btn-ultra-voilet" style="padding: 5px 12px; font-size: 1rem; border-radius: 6px;">log out</a>
+          </div>
+          
+        </div>
+      </nav>

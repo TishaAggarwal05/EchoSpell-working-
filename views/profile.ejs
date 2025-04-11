@@ -1,5 +1,6 @@
 <% layout('layout/boilerplate') %>
-
+<%- include('layout/partials/navprofile') %>
+<section id="detail">
     <div class="container profile-scroll">
         <h2 class="scroll-title">🧙‍♂️ Adventurer’s Scroll</h2>
 
@@ -29,7 +30,10 @@
             </span>
         </div>
     </div>
+</section>
+    
 
+<section id="latest-score">
 
     <div>
         <h2 class="latest-scores-title">LATEST LEVEL SCORES</h2>
@@ -48,6 +52,9 @@
 
         </div>
     </div>
+</section>
+<section id="progress">
+
     <h2 class="latest-scores-title">PROGRESS</h2>
     <div class="container  py-4">
         <div class="chart-wrapper">
@@ -59,14 +66,27 @@
           <% }) %>
         </div>
       </div>
-    
-      
+</section>
+<% if(user.chapters.length===0){ %>
+    <section id="play">
 
-    <div class="container enter-btn-container">
-        <button class="btn btn-ultra-voilet" onclick="window.location.href='/chapter/<%= user.username %>'">
-            Enter The school of Wonders
-        </button>
-    </div>
+        <div class="container enter-btn-container">
+            <button class="btn btn-ultra-voilet" onclick="window.location.href='/realtime/<%=user._id%>'">
+                Do your inital asessment
+            </button>
+        </div>
+    </section>
+<% }else{ %>
+    <section id="play">
+
+        <div class="container enter-btn-container">
+            <button class="btn btn-ultra-voilet" onclick="window.location.href='/chapter/<%= user.username %>'">
+                Enter The school of Wonders
+            </button>
+        </div>
+    </section>
+    <% } %>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const graphData = <%- JSON.stringify(chapterGraphs) %>;
