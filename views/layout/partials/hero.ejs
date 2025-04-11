@@ -1,38 +1,108 @@
-<section style="height:100vh;" class="py-md-5 py-6">
-    <div class="container py-lg-6">
-      <!--row-->
-      <div class="row align-items-center gy-4 justify-content-center">
-        <div class="col-xxl-5 col-xl-6 col-md-10">
-          <div class="d-flex flex-column gap-5 text-center">
-            <div class="d-flex flex-column gap-2">
-              <h1 class="mb-0 display-7 fw-bold">
-                <span id="typing-text" class="cinzel-first">Welcome to EchoSpell</span>
-                
-              </h1>
-              <span class="text-muted fs-5">your voice is a unique spell</span>
-              <!--heading-->
-              <h2 class="mb-0 display-7 fw-bold">
-                <span id="typing-text" class="cinzel-first">UNLOCK THE MAGIC OF SPEECH!</span>
-                
-              </h2>
-            </div>
-            <div class="my-4 container d-flex justify-content-center ">
-              <button class="mx-2 py-2 px-4  btn btn-ultra-voilet" id="assess">Start your Quest</button>
-              <button type="button" class="btn py-2 px-4 btn-outline-light">learn more</button>
+<!-- Add to <head> -->
+    <style>
+      body {
+    background-blend-mode: overlay;
+    background-color: rgba(50, 30, 70, 0.5);
+}
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 120px;
+    }
+  
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  
+    .hero-title {
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: #f8f0ff;
+      text-shadow: 0 0 10px #b59bff;
+      margin-bottom: 0;
+    }
+    .app-name {
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #3f0e63; /* Dark royal purple */
+  text-shadow:
+    0 0 8px rgba(233, 233, 233, 0.973), /* soft lavender glow */
+    2px 2px 6px rgba(255, 255, 255, 0.973);   /* dark drop shadow for contrast */
+  text-transform: uppercase;
+}
 
-            </div>
- 
-          </div>
-          
-        </div>
+
+    .hero-subtitle {
+      font-size: 1.4rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+  
+    .hero-tagline {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #eee;
+      text-shadow: 0 0 5px #8f84e2;
+    }
+
+    .btn-group {
+  display: flex;
+  gap: 1rem; /* adjust the space between buttons */
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+  
+    .btn-outline-light,
+.btn-ultra-voilet {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 20px !important;
+  line-height: 1.5;
+}
+.btn-outline-light {
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent background */
+  backdrop-filter: blur(8px);           /* glass blur effect */
+  -webkit-backdrop-filter: blur(8px);   /* Safari support */
+  color: #f8f0ff;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(140, 120, 255, 0.2);
+}
+.btn-ultra-voilet:hover {
+text-decoration: none;         /* <-- prevents underline on hover too */
+color: white; 
+}
+
+  </style>
+  
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Welcome to <span class="app-name">EchoSpell</span>
+      </h1>
+      <p class="hero-subtitle">Your voice is a unique spell</p>
+      <h2 class="hero-tagline">UNLOCK THE MAGIC OF SPEECH!</h2>
+      <div class="btn-group">
+        <button class="btn btn-ultra-voilet" id="assess">Start Your Quest</button>
+        <a class="btn btn-outline-light" href="#features-section">Learn More</a>
       </div>
     </div>
   </section>
+  
   <script>
-    
-    let btn_assess= document.getElementById('assess');
-    
-    btn_assess.addEventListener('click',async()=>{
-        window.location.href = "/signup"
-    })
-    </script>
+    document.getElementById('assess').addEventListener('click', () => {
+      window.location.href = "/signup";
+    });
+  </script>
+  

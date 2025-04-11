@@ -1,7 +1,9 @@
 * {
     font-family: "Cinzel", serif;
 }
-
+html {
+    scroll-behavior: smooth;
+  }
 body {
     background: radial-gradient(circle at top, rgba(20, 10, 40, 0.8), rgba(5, 5, 15, 1)), 
                 radial-gradient(circle at bottom right, rgba(30, 60, 120, 0.5), transparent);
@@ -13,6 +15,7 @@ body {
     background: linear-gradient(to right, #b478c3, #472b85);
     color: #fff;
     border-radius: 8px;
+    align-content: center;
     padding: 10px 20px;
     font-weight: bold;
     transition: all 0.3s ease-in-out;
