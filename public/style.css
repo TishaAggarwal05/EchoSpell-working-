@@ -11,22 +11,6 @@ body {
     color: white;
 }
 
-.btn-ultra-violet {
-    background: linear-gradient(to right, #b478c3, #472b85);
-    color: #fff;
-    border-radius: 8px;
-    align-content: center;
-    padding: 10px 20px;
-    font-weight: bold;
-    transition: all 0.3s ease-in-out;
-}
-
-.btn-ultra-violet:hover {
-    --box-shadow-color: rgba(132, 74, 178, 0.9);
-    box-shadow: 0 0 15px var(--box-shadow-color);
-    transform: scale(1.05);
-}
-
 .word {
     transition: color 0.3s, text-shadow 0.3s;
 }

@@ -20,6 +20,15 @@ html {
   width: 100%;
   z-index: 1000;
 }
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.08); /* Light tint, adjust as needed */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
 
 
 /* Features Section */
