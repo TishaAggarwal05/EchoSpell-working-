@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-const Phoneme = require("./models/users");
+const User = require("./models/users");
 
 const fetchData = async (id) => {
     try {
-        console.log("meow:",id)
         const userId = new mongoose.Types.ObjectId(id);
-        const Data= await Phoneme.findById(userId)
-        console.log("extract mein Data:",Data) 
+        const Data= await User.findById(userId)
+        console.log("extract Data:",Data) 
         return processPhonemes(Data.initialAssessment.data); // Pass Data directly
     } catch (err) {
         console.error("Error fetching data:", err);
@@ -17,12 +16,7 @@ const fetchData = async (id) => {
 const processPhonemes = (data) => {
     let phonemeData = {}; // Store phoneme accuracy values
 
-    console.log("type:", typeof data);
-    console.log("isarray:", Array.isArray(data));
-
-
     data.forEach((entry) => {
-        if (!Array.isArray(entry)) return; // Ensure `entry` is an array
 
         entry.forEach((wordObj) => { // Iterate over words in inner array
             console.log("Processing:", wordObj.Word);
@@ -44,7 +38,7 @@ const processPhonemes = (data) => {
         });
     });
     console.log(phonemeData)
-    //sample:
+    //sample phonemeData:
     // {
     //     dh: [ 47 ],
     //     ih: [ 39, 42 ],
@@ -68,7 +62,7 @@ const processPhonemes = (data) => {
     }
 
     console.log("Average Accuracy for Each Phoneme:", avgPhonemeAccuracy);
-    const lowAccur=filterByThreshold(avgPhonemeAccuracy, 70); // Example threshold = 70
+    const lowAccur=filterByThreshold(avgPhonemeAccuracy, 70); // Example ka threshold = 70
     return {lowAccur, avgPhonemeAccuracy }
 };
 

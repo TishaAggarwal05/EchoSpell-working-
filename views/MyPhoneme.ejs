@@ -36,7 +36,7 @@ module.exports = Chapter; -->
             <div class="card-body">
               <h5 class="card-title"><%= unp.ULdata.reply["Level Name"] %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= unp.ULdata.reply["Fantasy Prompt"] %></h6>
-              <p class="card-text"><%= unp.ULdata.reply["Speech Exercise"] %></p>
+              <p class="card-text">difficulty:<%= unp.difficulty %></p>
   
               <form action="/realtime/<%= chapterDetailss.user_id %>" method="get" style="display: inline;">
                 <input type="hidden" name="text" value="<%= unp.ULdata.reply['Speech Exercise'] %>">
