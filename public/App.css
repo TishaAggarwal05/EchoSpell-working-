@@ -1,0 +1,306 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("images/background.jpg");
+  /* If in public */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* Ensures the image stays constant */
+  background-repeat: no-repeat;
+  height: 100vh;
+  font-family: "Cinzel Decorative", serif;
+}
+
+/* Features Section */
+.features-section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+/* Styled Heading */
+.how-it-works h2,
+.section-heading,
+.features-heading {
+  color: white;
+  font-size: 2.5rem;
+  font-family: "Cinzel Decorative", serif;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+/* 
+.how-it-works h2 {
+  color: white;
+  font-size: 2.5rem;
+  font-family: "Cinzel Decorative", serif;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+} */
+
+/* Adding the horizontal lines and diamonds */
+.how-it-works h2::before,
+.how-it-works h2::after,
+.section-heading::before,
+.section-heading::after,
+.features-heading::before,
+.features-heading::after {
+  content: "";
+  display: inline-block;
+  width: 80px;
+  height: 2px;
+  background: white;
+  vertical-align: middle;
+  margin: 0 15px;
+}
+
+.how-it-works h2::before,
+.section-heading::before,
+.features-heading::before {
+  color: white;
+  content: "◇";
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.how-it-works h2::before {
+  color: white;
+  content: "◇";
+  font-size: 1.2rem;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.how-it-works h2::after,
+.section-heading::after,
+.features-heading::after {
+  content: "◇";
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+
+.how-it-works h2::after {
+  content: "◇";
+  font-size: 1.2rem;
+  text-align: center;
+  margin-left: 10px;
+}
+
+/* Feature Boxes */
+.features-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Feature Box - Magical Glow Effect */
+.feature-box {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  padding: 40px;
+  width: 300px;
+  height: 200px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  font-family: "Cinzel Decorative", serif;
+  box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s ease-in-out;
+}
+
+.feature-box p {
+  font-size: 19px;
+  font-weight: 400;
+}
+
+/* Magical pulse effect */
+.feature-box::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 75%);
+  transform: rotate(65deg);
+}
+
+.feature-box:hover::before {
+  top: 0;
+  left: 0;
+}
+
+.feature-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 6px 25px rgba(255, 255, 255, 0.4);
+}
+
+/* Common Heading Style (Same as Features) */
+.section-heading {
+  font-size: 2.5rem;
+  /* font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase; */
+}
+
+/* Storyline Section */
+.storyline-section {
+  padding: 50px 10%;
+  color: white;
+  text-align: center;
+}
+
+.storyline-text {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  position: relative;
+}
+
+.how-it-works h2 {
+  font-size: 2.5rem;
+  /* color: #f4e3ff;
+  /* Soft magical glow */
+  /* text-shadow: 0 0 10px #d9a7ff, 0 0 20px #c678dd;
+  margin-bottom: 30px; */
+
+}
+
+.roadmap {
+  position: relative;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical glowing path */
+.roadmap::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #d9a7ff, #c678dd);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  animation: glowPath 2s infinite alternate;
+}
+
+/* Glowing animation for the path */
+@keyframes glowPath {
+  0% {
+    box-shadow: 0 0 5px #d9a7ff;
+  }
+
+  100% {
+    box-shadow: 0 0 15px #c678dd;
+  }
+}
+
+/* Step Container */
+.roadmap-step {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  margin: 30px 0;
+}
+
+/* Alternating step alignment */
+.roadmap-step:nth-child(odd) {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.roadmap-step:nth-child(even) {
+  text-align: left;
+}
+
+/* Step Orb */
+.step-orb {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #ffccff, #d9a7ff);
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 15px #e0aaff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #45006e;
+  z-index: 2;
+}
+
+/* Step Content */
+.step-content {
+  width: 45%;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  font-size: 20px;
+}
+
+/* Glowing Arrows */
+.roadmap-step::after {
+  content: "↓";
+  font-size: 2rem;
+  color: #c678dd;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 75px;
+  animation: glowArrow 1.5s infinite alternate;
+}
+
+@keyframes glowArrow {
+  0% {
+    text-shadow: 0 0 5px #d9a7ff;
+  }
+
+  100% {
+    text-shadow: 0 0 15px #c678dd;
+  }
+}
+
+/* Remove arrow from last step */
+.roadmap-step:last-child::after {
+  display: none;
+}
+
+/* footer styles */
+footer {
+  background: #061c27;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  /* bottom: 0; */
+  width: 100%;
+}
