@@ -2,7 +2,7 @@
 
 Link to demo video: https://youtu.be/dVInueYDnJU
 
-Live website:
+Live website: https://echospell.onrender.com/
 
 (Please reach out on tishaarora.0010@gmail.com to start the gpu)
 
