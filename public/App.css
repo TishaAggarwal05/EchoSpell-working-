@@ -16,6 +16,48 @@ body {
 html {
   scroll-behavior: smooth;
 }
+/* styles.css or global CSS file */
+.loading-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Ensures vertical stacking */
+  z-index: 9999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid #E0B0FF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+#loading-message {
+  color: #fff;
+  margin-top: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
 .navbar {
   position: fixed;
   top: 0;

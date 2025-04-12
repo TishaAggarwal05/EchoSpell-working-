@@ -25,11 +25,49 @@
 </head>
 
 <body>
-  
+        <!-- Loading Spinner -->
+        <div id="global-loading-spinner" class="loading-spinner">
+          <div class="spinner"></div>
+          <p id="loading-message">Loading...</p>
+        </div>
     <%- body %>
+    <script>
+      window.addEventListener("pageshow", function (event) {
+        const loadingSpinner = document.getElementById("global-loading-spinner");
+        if (loadingSpinner) {
+          loadingSpinner.style.display = "none"; // Hide loader if coming from back button
+        }
+      });
+    </script>
+    <script>
+      const globalSpinner = document.getElementById('global-loading-spinner');
+      const loadingMessage = document.getElementById('loading-message');
+    
+      // Show spinner with optional message
+      function showLoader(message = "Loading...") {
+        loadingMessage.textContent = message;
+        globalSpinner.style.display = 'flex';
+      }
+    
+      // Hide spinner
+      function hideLoader() {
+        globalSpinner.style.display = 'none';
+      }
+    
+      // Auto-show on form submission
+      document.addEventListener('DOMContentLoaded', () => {
+        const allForms = document.querySelectorAll('form');
+        allForms.forEach(form => {
+          form.addEventListener('submit', () => {
+            showLoader("Loading...");
+          });
+        });
+      });
+    
+      // Now you can use showLoader("Custom message") anywhere!
+    </script>
 
-
-
+    
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

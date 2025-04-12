@@ -1,7 +1,9 @@
 <% layout('layout/boilerplate') %>
 <%- include('layout/partials/nav2') %>
 <style>
-
+body {
+  padding-top: 50px;
+}
 .check-stats-btn {
   font-size: 1rem;
   border-color: #E0B0FF;
@@ -77,7 +79,7 @@
 </style>
   <!-- HEADER stays still -->
 <div class="text-center mb-4">
-  <h1 style="color: #ffffff;">YOUR QUESTS</h1>
+  <h2 class="latest-scores-title">YOUR QUESTS</h2>
 </div>
 
 <!-- HORIZONTAL SCROLL area -->
@@ -127,6 +129,13 @@
 
   
       chapter.addEventListener('click', () => {
+        const loadingSpinner = document.getElementById("global-loading-spinner");
+        const loadingMessage = document.getElementById("loading-message");
+
+        if (loadingSpinner && loadingMessage) {
+          loadingMessage.innerText = "Loading levels... Please wait, This might take a while!";
+          loadingSpinner.style.display = "flex";
+        }
         const currentPath = window.location.pathname;
         console.log(`Redirecting to: ${currentPath}/${pname}`);
         window.location.href = `${currentPath}/${pname.trim()}`;

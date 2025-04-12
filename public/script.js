@@ -54,7 +54,7 @@ async function assessing(callback1){
         if (jsonData.DisplayText) {
             recognizedText += jsonData.DisplayText.slice(0, -1) + " ";
             document.getElementById("recognizedText").innerText = recognizedText;
-            scrollText();
+            //scrollText();
         }
 
         totalN_best.push(jsonData.NBest[0].Words);
@@ -173,4 +173,10 @@ document.getElementById("startBtn").addEventListener("click", () => {
 
 document.getElementById("stopBtn").addEventListener("click", () => {
     if (stopRecording) stopRecording();
+    const loadingSpinner = document.getElementById("global-loading-spinner");
+    const loadingMessage = document.getElementById("loading-message");
+        if (loadingSpinner && loadingMessage) {
+          loadingMessage.innerText = "Loading... Please wait!";
+          loadingSpinner.style.display = "flex";
+        }
 });

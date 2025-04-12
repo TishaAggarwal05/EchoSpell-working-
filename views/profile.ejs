@@ -180,9 +180,9 @@
     <section id="play">
 
     <div class="container enter-btn-container">
-        <button class="btn btn-ultra-voilet" style="margin-bottom: 5%;" onclick="window.location.href='/chapter/<%= user.username %>'">
-            Enter The school of Wonders
-        </button>
+      <button class="btn btn-ultra-voilet enter-btn" style="margin-bottom: 5%;">
+        Go to Spellbook
+    </button>    
     </div>
     </section>
    
@@ -237,4 +237,26 @@
           });
         });
       </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const enterBtn = document.querySelector(".enter-btn");
+          if (enterBtn) {
+            enterBtn.addEventListener("click", function () {
+              const loadingSpinner = document.getElementById("global-loading-spinner");
+              const loadingMessage = document.getElementById("loading-message");
+      
+              if (loadingSpinner && loadingMessage) {
+                loadingMessage.innerText = "Loading Spellbook!";
+                loadingSpinner.style.display = "flex";
+      
+                // Give it a moment to show the loader before redirecting
+                setTimeout(() => {
+                  window.location.href = "/chapter/<%= user.username %>";
+                }, 500); // You can increase this delay slightly if needed
+              }
+            });
+          }
+        });
+      </script>
+      
       
