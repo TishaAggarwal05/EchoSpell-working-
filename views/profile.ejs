@@ -176,16 +176,7 @@
         </div>
       </div>
 </section>
-<% if(user.chapters.length===0){ %>
-    <section id="play">
 
-        <div class="container enter-btn-container">
-            <button class="btn btn-ultra-voilet" onclick="window.location.href='/realtime/<%=user._id%>'">
-                Do your inital asessment
-            </button>
-        </div>
-    </section>
-<% }else{ %>
     <section id="play">
 
     <div class="container enter-btn-container">
@@ -194,7 +185,7 @@
         </button>
     </div>
     </section>
-    <%}%>
+   
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const graphData = <%- JSON.stringify(chapterGraphs) %>;
