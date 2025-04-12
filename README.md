@@ -23,3 +23,12 @@ MONGODB_URI = your mongo url
 
 PORT = specify port
 
+## to run website
+
+in bash write following commands
+
+npm i
+
+nodemon index2.js
+
+
