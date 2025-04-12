@@ -1,62 +1,361 @@
 <% layout('layout/boilerplate') %>
 <%- include('layout/partials/nav2') %>
-<div style="height:100vh;" class="container">
-  <div class="container text-light display-3 text-center d-flex justify-content-center align-items-center gap-3">
-    <%= chapterDetailss.phoneme %>
-    <button class="btn btn-info rounded-circle text-white fw-bold" 
-            style="width: 35px; height: 35px; font-size: 20px; padding: 0;" 
-            onclick="togglePopup()">i</button>
+
+<style>
+  .level-card {
+    width: 180px;
+    position: relative;
+
+    margin-right: 35px; /* adjust this value as needed */
+
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  .level-image-wrapper {
+    position: relative;
+  }
+
+  .level-image {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: none; /* removed shadow from ball image */
+  }
+
+  .level-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(0, 0, 0);
+  padding: 6px 12px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+  .glassy-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 25px rgba(148, 0, 211, 0.5);
+  }
+
+  #popupDialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 20, 0.6);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .popup-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 25px rgba(128, 0, 128, 0.5);
+    max-width: 450px;
+    color: #f5f5f5;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .popup-box h5 {
+    font-size: 1.4rem;
+    color: #E0B0FF;
+    margin-bottom: 0.75rem;
+  }
+
+  .popup-box p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #f3f3f3;
+    margin-bottom: 1.5rem;
+  }
+
+  .popup-box img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 10px rgba(224, 176, 255, 0.4);
+  }
+
+  .popup-box button {
+    background-color: #E0B0FF;
+    color: #000;
+    font-weight: bold;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  .popup-box button:hover {
+    background-color: #fff;
+    color: #4e007a;
+  }
+
+  .scroll-container {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: #a64bf4;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .scroll-container {
+      width: 100% !important;
+    }
+
+    .portal-display {
+      display: none;
+    }
+
+    .latest-scores-title {
+      font-size: 40px !important;
+    }
+  }
+  .scroll-container {
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  max-width: 100%;
+  padding-bottom: 10px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #a64bf4;
+  border-radius: 4px;
+}
+
+.level-card {
+  width: 180px;
+  flex: 0 0 auto;
+  position: relative;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.portal-display {
+  min-height: 100%;
+}
+
+@media (max-width: 768px) {
+  .display-3 {
+    font-size: 2rem !important;
+  }
+
+  .portal-display {
+    order: 2;
+    max-width: 100%;
+    margin-top: 2rem;
+  }
+
+  .scroll-container {
+    padding-bottom: 1rem;
+  }
+}
+.hover-image {
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 20px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.hover-image:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+.play-btn {
+  background: linear-gradient(to right, #a64bf4, #e0b0ff);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  padding: 0.4rem 1.2rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 0 10px rgba(166, 75, 244, 0.5);
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #e0b0ff, #a64bf4);
+  box-shadow: 0 0 20px rgba(224, 176, 255, 0.6);
+  color: #000;
+}
+.stars {
+    font-size: 36px; /* Bigger size */
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .star {
+    transition: transform 0.2s ease;
+  }
+
+  .star.filled {
+    color: rgb(237, 165, 247);
+    text-shadow: 0 0 8px #311455, 0 0 12px #241a31;
+  }
+
+  .star.empty {
+    color: #ccc;
+  }
+
+  .stars:hover .star {
+    transform: scale(1.1);
+  }
+
+
+
+</style>
+
+<div id="popupDialog">
+  <div class="popup-box">
+    <h5>Guidance for <%= guidence.phoneme %></h5>
+    <p>"<%= guidence.guide %>".</p>
+    <h5>Visual Aid</h5>
+    <div><img src="/mouthmove/<%= guidence.phoneme %>.jpg" alt="Phoneme Image"></div>
+    <button class="btn btn-sm btn-secondary" onclick="togglePopup()">Close</button>
   </div>
-  
-  <div id="popupDialog">
-    <div class="popup-box">
-      <h5>guidence for <%= guidence.phoneme %></h5>
-      <p>"<%= guidence.guide %>".</p>
-      <h5>visual Aid</h5>
-      <div><img src="/mouthmove/<%= guidence.phoneme %>.jpg" alt="Phoneme Image"></div>
-      <button class="btn btn-sm btn-secondary" onclick="togglePopup()">Close</button>
+</div>
+
+<!-- Content Row -->
+<div class="d-flex flex-wrap flex-md-nowrap gap-4 px-4">
+  <!-- Left Column -->
+  <div class="d-flex flex-column" style="width: 100%; max-width: 65%;">
+    <div class="text-light display-3 text-center d-flex justify-content-center align-items-center gap-3 latest-scores-title" style="font-size: 4rem; margin-bottom: 2rem; margin-top: 20px;">
+      <%= chapterDetailss.phoneme %>
+      <img src="/images/book2.png"
+     alt="info"
+     onclick="togglePopup()"
+     class="hover-image"
+     style=" height: 80px; border-radius: 50%; cursor: pointer; margin-left: 20px;" />
+
     </div>
-  </div>
-  
-    <div class="d-flex flex-row flex-wrap gap-3">
-  
+
+    <!-- Scrollable Level Cards -->
+    <div class="scroll-container d-flex gap-5 overflow-auto pb-2">
+
       <% if (chapterDetailss.levels.length !== 0) { %>
-        <% chapterDetailss.levels.forEach(ply => { %>
-          <div class="card" style="width: 18rem; flex: 0 0 auto;">
-            <div class="card-body">
-              <h5 class="card-title"><%= ply.Ldata.reply["Level Name"] %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= ply.Ldata.reply["Fantasy Prompt"] %></h6>
-              <p class="card-text"><%= ply.Ldata.reply["Speech Exercise"] %></p>
-              <p>rate: <%= ply.rate %> | score: <%= ply.score %></p>
+        <% chapterDetailss.levels.forEach((ply, idx) => { %>
+          <div class="level-card"
+            onmouseover='showInPortal("<%- ply.Ldata.reply["Level Name"].replace(/"/g, '&quot;') %>")'
+            onmouseout="resetPortal()">
+            <div class="level-image-wrapper">
+              <img src="/images/ball.png" class="level-image" alt="Level Image" />
+            </div>
+            <div class="text-center text-light mt-2">
+              <p>Score: <%= ply.score %></p>
+              <!-- Star Rating With Empty Stars -->
+              <div class="stars" style="margin-top: 0; padding: 0; align-content: center; justify-content: center;">
+                <% 
+                  let stars = 0;
+                  if (ply.rate === 'L') { stars = 1; } 
+                  else if (ply.rate === 'M') { stars = 2; } 
+                  else if (ply.rate === 'W') { stars = 3; } 
+                %>
+                <% for (let i = 0; i < stars; i++) { %>
+                  <span class="star filled">&#9733;</span> <!-- ★ Filled -->
+                <% } %>
+                <% for (let i = stars; i < 3; i++) { %>
+                  <span class="star empty">&#9734;</span> <!-- ☆ Empty -->
+                <% } %>
+              </div>
+              
+
+              
             </div>
           </div>
+          
         <% }) %>
       <% } %>
-  
+
       <% if (chapterDetailss.unplay.length !== 0) { %>
-        <% chapterDetailss.unplay.forEach(unp => { %>
-          <div class="card" style="width: 18rem; flex: 0 0 auto;">
-            <div class="card-body">
-              <h5 class="card-title"><%= unp.ULdata.reply["Level Name"] %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= unp.ULdata.reply["Fantasy Prompt"] %></h6>
-              <p class="card-text">difficulty:<%= unp.difficulty %></p>
-  
-              <form action="/realtime/<%= chapterDetailss.user_id %>" method="get" style="display: inline;">
+        <% chapterDetailss.unplay.forEach((unp, idx) => { %>
+          <div class="level-card"
+              onmouseover='showInPortal("<%- unp.ULdata.reply["Level Name"].replace(/"/g, "&quot;") %>")'
+              onmouseout="resetPortal()">            
+              <div class="level-image-wrapper">
+              <img src="/images/ball.png" class="level-image" alt="Level Image" />
+            </div>
+            <div class="text-center text-light mt-2">
+              <p>Difficulty: <%= unp.difficulty %></p>
+              <form action="/realtime/<%= chapterDetailss.user_id %>" method="get">
                 <input type="hidden" name="text" value="<%= unp.ULdata.reply['Speech Exercise'] %>">
                 <input type="hidden" name="phoneme" value="<%= chapterDetailss.phoneme %>">
-                <button type="submit" class="btn btn-link">Go to Realtime</button>
+                <button type="submit" class="play-btn">Play</button>
               </form>
             </div>
           </div>
         <% }) %>
       <% } %>
-  
     </div>
   </div>
-  <script>
-    function togglePopup() {
-      const popup = document.getElementById("popupDialog");
-      popup.style.display = popup.style.display === "none" ? "flex" : "none";
-    }
-  </script>
-  
+
+  <!-- Right Portal Display -->
+  <div class="portal-display text-light text-center d-flex align-items-center justify-content-center" style="width: 100%; max-width: 35%;">
+    <div style="position: relative; width: 100%;">
+      <img src="/images/portal.png" alt="Magical Portal" style="width:100%; height: 100%; object-fit: cover;" />
+      <div style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        text-shadow: 2px 2px 5px #000;
+        font-size: 1.6rem;
+        font-weight: bold;
+        font-family: 'Cinzel', serif;
+        text-align: center;
+      ">
+        <div id="portalName">Hover over a level</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function togglePopup() {
+    const popup = document.getElementById("popupDialog");
+    popup.style.display = popup.style.display === "none" ? "flex" : "none";
+  }
+
+  function showInPortal(name) {
+    document.getElementById("portalName").innerText = name;
+  }
+
+  function resetPortal() {
+    document.getElementById("portalName").textContent = "Hover over a level";
+  }
+</script>
