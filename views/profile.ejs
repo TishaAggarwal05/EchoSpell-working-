@@ -108,6 +108,14 @@
 <section id="detail">
     <div class="container profile-scroll" style="margin-top: 5%;" >
         <h2 class="scroll-title">🧙‍♂️ Adventurer’s Scroll</h2>
+
+        <div class="scroll-line">
+          <span class="scroll-label">Name:</span>
+          <span class="scroll-value">
+              <%= user.realname %>
+          </span>
+      </div>
+
         <div class="scroll-line">
             <span class="scroll-label">Username:</span>
             <span class="scroll-value">
@@ -220,7 +228,7 @@
                     color: '#ffffff'
                   },
                   grid: {
-                    color: 'rgba(255, 255, 255, 0.1)'
+                    color: 'rgba(255, 255, 255, 0.3)'
                   }
                 },
                 y: {
@@ -230,7 +238,7 @@
                     color: '#ffffff'
                   },
                   grid: {
-                    color: 'rgba(255, 255, 255, 0.1)'
+                    color: 'rgba(255, 255, 255, 0.3)'
                   }
                 }
               }

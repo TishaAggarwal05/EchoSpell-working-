@@ -247,7 +247,7 @@ app.post('/level/:exercise/:id', async (req, res) => {
 
 async function generLevel(phoneme, difficulty) {
     try {
-        const response = await axios.post('https://0133-35-201-142-81.ngrok-free.app/chat', {
+        const response = await axios.post(process.env.NGROK_URI, {
             user_input: `Generate a Level Name, Fantasy Prompt, and Speech Exercise for targetted phoneme '${phoneme}' and difficulty '${difficulty}'`
         }, {
             headers: {
