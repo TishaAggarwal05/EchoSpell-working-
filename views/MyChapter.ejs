@@ -1,41 +1,131 @@
 <% layout('layout/boilerplate') %>
 <%- include('layout/partials/nav2') %>
-  <div class="text-center container">
-    <H1 style="color: #ffffff;">
-      YOUR QUESTS
-    </H1>
-  </div>
+<style>
 
-  <div class="container mt-5">
-    <div>
-      <div id="container">
-        <div class="chapter-scroll-container">
-          <div class="d-flex flex-row">
-            <% for (let ch of user.chapters) { %>
-              <div class="chapter mx-5 chapter-card position-relative text-white">
-                <img src="/images/book.png" alt="Book" class="chapter-img">
-                <div class="overlay">
-                  <h5 class="phoneme-text"><%= ch.phoneme.trim() %></h5> <!-- Trim spaces -->
-                </div>
-              </div>
-            <% } %>
-            
+.check-stats-btn {
+  font-size: 1rem;
+  border-color: #E0B0FF;
+  color: #E0B0FF;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.check-stats-btn:hover {
+  background-color: #E0B0FF;
+  color: #000;
+  box-shadow: 0 0 10px #E0B0FF;
+}
+.img-click-layer {
+  position: relative;
+  z-index: -1; /* Below buttons/overlay if needed */
+}
+
+.chapter-scroll-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 1rem;
+}
+
+.chapter-row {
+  display: inline-flex;
+  gap: 2rem;
+}
+
+.chapter-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  min-width: 260px;  /* increased size */
+  max-width: 260px;
+  margin: 0 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  padding-bottom: 1rem; /* give space for button */
+}
+
+
+.chapter-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(224, 176, 255, 0.6);
+}
+
+.chapter-img {
+  width: 250px;
+  margin-top: 20px;
+  filter: drop-shadow(0 0 5px #E0B0FF);
+}
+
+.overlay {
+  position: absolute;
+  top: 40%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+
+.phoneme-text {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  color: #000000;
+  text-shadow: 1px 1px 4px #4B007D;
+}
+
+</style>
+  <!-- HEADER stays still -->
+<div class="text-center mb-4">
+  <h1 style="color: #ffffff;">YOUR QUESTS</h1>
+</div>
+
+<!-- HORIZONTAL SCROLL area -->
+<div class="chapter-scroll-container">
+  <div class="chapter-row">
+    <% for (let ch of user.chapters) { %>
+      <% const played = ch.levels?.length || 0; %>
+      <% const unplay = ch.unplay?.length || 0; %>
+      <% const totalLevels = played + unplay; %>
+      <% const progress = totalLevels > 0 ? Math.floor((played / totalLevels) * 100) : 0; %>
+
+      <div class="chapter chapter-card position-relative text-white">
+        <div class="img-click-layer">
+          <img src="/images/book.png" alt="Book" class="chapter-img">
+        </div>
+        <div class="overlay">
+          <h5 class="phoneme-text"><%= ch.phoneme.trim() %></h5>
+        </div>
+        <div class="progress mt-2" style="height: 10px; background: rgba(255,255,255,0.1);">
+          <div class="progress-bar" role="progressbar"
+               style="width: <%= progress %>%; background-color: #E0B0FF;"
+               aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100">
           </div>
         </div>
-
+        <small class="d-block text-center mt-1" style="font-size: 1rem; color: #E0B0FF;">
+          Levels completed: <%= played %>
+        </small>
+        <button class="btn btn-sm btn-outline-light mt-2 check-stats-btn"
+                onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/user/profile/<%= user._id %>#progress';">
+          Check Stats
+        </button>
       </div>
-    </div>
-
+    <% } %>
   </div>
+</div>
+
   <script>
     const chapters = document.querySelectorAll('.chapter');
   
     chapters.forEach(chapter => {
+
       const pnameRaw = chapter.querySelector('.phoneme-text').textContent;
       console.log(`RAW pname: [${pnameRaw}]`);
   
       const pname = pnameRaw.trim();
       console.log(`TRIMMED pname: [${pname}]`);
+
   
       chapter.addEventListener('click', () => {
         const currentPath = window.location.pathname;
