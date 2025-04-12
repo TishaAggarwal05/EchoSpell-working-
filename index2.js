@@ -15,7 +15,7 @@ const engine = require('ejs-mate');
 const MongoStore = require("connect-mongo");
 
 const app = express();
-const port = 5500;
+const port = process.env.PORT;
 
 const User = require('./models/users.js');
 const Unplay = require('./models/unplevel.js');
