@@ -1,56 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layout/boilerplate') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    <style>
-        .alert {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-        .alert-success { background-color: lightgreen; color: green; }
-        .alert-error { background-color: lightcoral; color: red; }
-    </style>
-</head>
+<style>
+    body {
+      min-height: 90vh;
+      padding-top: 0 ;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Cinzel', serif;
+      background-size: cover;
+    }
+  
+    .glass-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 0.8rem 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(224, 176, 255, 0.3);
+      color: white;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  
+    h2 {
+      color: #E0B0FF;
+      margin-bottom: 0.6rem;
+      font-size: 1.6rem;
+    }
+  
+    label {
+      display: block;
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: #ffffff;
+      text-align: left;
+    }
+  
+    input {
+      width: 100%;
+      padding: 0.45rem;
+      border-radius: 10px;
+      border: none;
+      margin-top: 0.2rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      outline: none;
+      font-size: 0.9rem;
+      box-shadow: inset 0 0 4px rgba(224, 176, 255, 0.25);
+    }
+  
+    input::placeholder {
+      color: #ddd;
+    }
+  
+    button {
+      margin-top: 1rem;
+      padding: 0.55rem 1.2rem;
+      background-color: #E0B0FF;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #E0B0FF;
+    }
+  
+    button:hover {
+      background-color: #ffffff;
+      color: #4e007a;
+      box-shadow: 0 0 15px #E0B0FF;
+    }
+  
+    .login-link {
+      margin-top: 0.8rem;
+      display: inline-block;
+      color: #E0B0FF;
+      text-decoration: underline;
+      font-size: 0.85rem;
+    }
+  
+    .alert {
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+  
+    .alert-success {
+      background-color: rgba(144, 238, 144, 0.2);
+      color: #90ee90;
+      border: 1px solid #90ee90;
+    }
+  
+    .alert-error {
+      background-color: rgba(255, 99, 71, 0.2);
+      color: #ff6b6b;
+      border: 1px solid #ff6b6b;
+    }
+  </style>
+  
+  
 
-<body>
-    <% if (messages.error && messages.error.length > 0) { %>
-        <div class="alert alert-error">
-            <%= messages.error[0] %>
-        </div>
-    <% } %>
-    
-    <% if (messages.success && messages.success.length > 0) { %>
-        <div class="alert alert-success">
-            <%= messages.success[0] %>
-        </div>
-    <% } %>
+<div class="glass-box">
+  <h2>Sign Up</h2>
 
-    <form action="/signup" method="POST">
+  <% if (messages.error && messages.error.length > 0) { %>
+    <div class="alert alert-error">
+      <%= messages.error[0] %>
+    </div>
+  <% } %>
 
-        <label>Full Name:</label>
-        <input type="text" name="realname" value="<%= formData.realname || '' %>" required>
+  <% if (messages.success && messages.success.length > 0) { %>
+    <div class="alert alert-success">
+      <%= messages.success[0] %>
+    </div>
+  <% } %>
 
-        <label>Username:</label>
-        <input type="text" name="username" value="<%= formData.username || '' %>" required>
+  <form action="/signup" method="POST">
+    <label>Full Name:</label>
+    <input type="text" name="realname" value="<%= formData.realname || '' %>" required>
 
-        <label>Email:</label>
-        <input type="email" name="email" value="<%= formData.email || '' %>" required>
+    <label>Username:</label>
+    <input type="text" name="username" value="<%= formData.username || '' %>" required>
 
-        <label>Password:</label>
-        <input type="password" name="password" required>
+    <label>Email:</label>
+    <input type="email" name="email" value="<%= formData.email || '' %>" required>
 
-        <label>Parent Name:</label>
-        <input type="text" name="parent" value="<%= formData.parent || '' %>" required>
+    <label>Password:</label>
+    <input type="password" name="password" required>
 
-        
+    <label>Parent Name:</label>
+    <input type="text" name="parent" value="<%= formData.parent || '' %>" required>
 
-        <button type="submit">Submit</button>
-    </form>
-    <a href="/login">already registered?: LOGIN</a>
-</body>
+    <button type="submit">Submit</button>
+  </form>
 
-</html>
+  <a href="/login" class="login-link">Already registered? Login</a>
+</div>
