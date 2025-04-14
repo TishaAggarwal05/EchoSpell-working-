@@ -124,6 +124,24 @@
         }
     }
 </style>
+
+<div id="welcomePopup" class="popup-overlay">
+    <div class="popup-content">
+      <div class="popup-left">
+        <ul>
+          <li> Hit "Start" to begin recording.</li>
+          <li> Watch your spoken words appear magically. </li>
+          <li> Press "Stop" when you’re done.</li>
+        </ul>
+        <button onclick="closePopup()">Got it!</button>
+      </div>
+      <div class="popup-right">
+        <img src="/images/wizard2.png" alt="Wizard" class="wizard-image">
+      </div>
+    </div>
+  </div>
+
+
     <div class="container">
         <p style="display:none;" id="unvis-id"><%=id%></p>
         <p style="display:none;" id="is-initial"><%=initial%></p>
@@ -179,4 +197,13 @@
         document.getElementById("startBtn").addEventListener("click", () => {
             autoScrollScrollContainer();
         });
+
+    window.addEventListener('load', function () {
+        document.getElementById('welcomePopup').style.display = 'flex';
+    });
+
+    function closePopup() {
+        document.getElementById('welcomePopup').style.display = 'none';
+    }
+
     </script>

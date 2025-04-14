@@ -261,10 +261,23 @@
   .stars:hover .star {
     transform: scale(1.1);
   }
-
-
-
 </style>
+<div id="welcomePopup" class="popup-overlay">
+  <div class="popup-content">
+    <div class="popup-left">
+      <ul>
+        <li> Hover on a crystal ball to reveal the level.</li>
+        <li> Tap the book to open the speech guide. </li>
+        <li> Collect stars by pronouncing spells correctly!</li>
+      </ul>
+      <button onclick="closePopup()">Got it!</button>
+    </div>
+    <div class="popup-right">
+      <img src="/images/wizard2.png" alt="Wizard" class="wizard-image">
+    </div>
+  </div>
+</div>
+
 
 <div id="popupDialog">
   <div class="popup-box">
@@ -386,4 +399,11 @@
   function resetPortal() {
     document.getElementById("portalName").textContent = "Hover over a level";
   }
+window.addEventListener('load', function () {
+  document.getElementById('welcomePopup').style.display = 'flex';
+});
+
+function closePopup() {
+  document.getElementById('welcomePopup').style.display = 'none';
+}
 </script>

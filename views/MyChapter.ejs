@@ -77,6 +77,25 @@ body {
 }
 
 </style>
+
+
+<div id="welcomePopup" class="popup-overlay">
+  <div class="popup-content">
+    <div class="popup-left">
+      <ul>
+        <li> Choose a chapter to begin your magical training.</li>
+        <li> Watch the progress bar fill as you complete levels. </li>
+        <li> Click "Check Stats" to track your pronunciation magic!</li>
+      </ul>
+      <button onclick="closePopup()">Got it!</button>
+    </div>
+    <div class="popup-right">
+      <img src="/images/wizard2.png" alt="Wizard" class="wizard-image">
+    </div>
+  </div>
+</div>
+
+
   <!-- HEADER stays still -->
 <div class="text-center mb-4">
   <h2 class="latest-scores-title">YOUR QUESTS</h2>
@@ -141,5 +160,14 @@ body {
         window.location.href = `${currentPath}/${pname.trim()}`;
       });
     });
+
+    window.addEventListener('load', function () {
+  document.getElementById('welcomePopup').style.display = 'flex';
+});
+
+function closePopup() {
+  document.getElementById('welcomePopup').style.display = 'none';
+}
+
   </script>
   
