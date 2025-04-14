@@ -171,8 +171,9 @@ app.get('/realtime/:id', async(req, res) => {
     const { id } = req.params;
     
     if(req.query.text){
+        const prompt = req.query.fantasy_prompt;
         const {text,phoneme}= req.query;
-        res.render('realtime2',{userid:id,id,text,phoneme,initial:false})//lvl assessment
+        res.render('realtime2',{userid:id,id,text,prompt,phoneme,initial:false})//lvl assessment
     }else{
         const user= await User.findOne({_id:id})
         res.render('realtime2', {userid:id, id, initial:true,user}); // initial assessment

@@ -3,11 +3,12 @@
 <style>
 .heading {
     font-weight: normal;
+    text-align: center;
     color: #ffffff;
     text-shadow: 2px 2px 6px #d8b4fe, 0 0 10px #9d4edd;
     letter-spacing: 1px;
     padding: 10px;
-    max-width: 60%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     animation: magical-glow 3s infinite ease-in-out;
@@ -126,8 +127,12 @@
     <div class="container">
         <p style="display:none;" id="unvis-id"><%=id%></p>
         <p style="display:none;" id="is-initial"><%=initial%></p>
-        
-        <h2 class="heading" >Read the magical scroll aloud:</h2>
+
+        <% if(initial === true){ %>
+            <h2 id="prompt_text" class="heading" >Read the magical scroll aloud:</h2>
+        <% } else { %>
+            <h2 id="prompt_text" class="heading" ><%= prompt %></h2>
+        <% } %>
 
         <div class="flex-columns">
             <!-- Left: Magical Scroll -->
