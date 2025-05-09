@@ -1,28 +1,35 @@
-# EchoSpell
-Where Speech Becomes Magic — A Fantasy-Themed Speech Therapy Platform for Kids
+# **EchoSpell** 🧙‍♀️🔤  
+**Where Speech Becomes Magic — A Fantasy-Themed Speech Therapy Platform for Kids**
 
-In the enchanted land of EchoSpell, every word holds power, and every sound unlocks new adventures.
-EchoSpell is a gamified, fantasy-themed speech therapy web app that transforms traditional articulation practice into an immersive journey. Children don the role of young spellcasters-in-training, mastering magical phonemes to unlock new levels and sharpen their pronunciation skills — all while having fun. This fantasy layer isn’t just decorative; it plays a vital role in keeping kids engaged, motivated, and emotionally invested in their speech development journey.
+> *In the enchanted land of EchoSpell, every word holds power, and every sound unlocks new adventures.*
 
-✨ Features
-🧠 Initial Phoneme Assessment
-Powered by Azure Speech API, EchoSpell listens to what the child says and analyzes the phonemes for pronunciation accuracy.
+**EchoSpell** is a gamified, fantasy-themed speech therapy web app that transforms traditional articulation practice into an immersive journey.  
+Children don the role of young spellcasters-in-training, mastering magical phonemes to unlock new levels and sharpen their pronunciation skills — all while having fun.  
+This fantasy layer isn’t just decorative; it plays a vital role in keeping kids **engaged**, **motivated**, and **emotionally invested** in their speech development journey.
 
-👤 Personalized Phoneme Profile
-Based on the initial assessment, each child receives a customized profile highlighting problematic phonemes.
+---
 
-🎯 LLM-Generated Focused Speech Exercises
-Using the LLaMA 3 model, personalized speech exercises are generated dynamically to focus on the child’s specific articulation challenges.
+## ✨ **Features**
 
-📊 Dynamic Level Progression
-Each time the child practices, their performance shapes the next level — keeping the journey adaptive and continuously challenging.
+- 🧠 **Initial Phoneme Assessment**  
+  Powered by **Azure Speech API**, EchoSpell listens to what the child says and analyzes the phonemes for pronunciation accuracy.
 
-📈 Phoneme Progress Tracking
-A visual chart tracks the improvement of each phoneme over time, showing growth and motivating continued practice.
+- 👤 **Personalized Phoneme Profile**  
+  After the initial assessment, a customized profile is created, identifying **problematic phonemes** for each child to focus on.
 
-📖 Chapter-Based Visual Aids
-Each chapter presents a helpful popup — a visual guide with a description of how to pronounce the phoneme correctly, available anytime for reference.
+- 🧾 **LLM-Generated Focused Speech Exercises**  
+  Using the **LLaMA 3** language model, EchoSpell generates speech exercises that specifically target each child's articulation challenges.
 
+- 📈 **Dynamic Level Generation**  
+  Levels are **dynamically created** based on how well the child performs, ensuring the experience stays challenging and personalized.
+
+- 📊 **Phoneme Progress Tracking**  
+  A progress chart for each phoneme helps visualize **improvement over time**, giving children and guardians a sense of achievement.
+
+- 📖 **Chapter-Based Visual Aids**  
+  Each chapter includes a **popup reference guide** with illustrations and descriptions on how to pronounce phonemes — available anytime for reinforcement.
+
+---
 
 Link to demo video: https://youtu.be/dVInueYDnJU
 
@@ -30,7 +37,7 @@ Live website: https://echospell.onrender.com/
 
 (Please reach out on tishaarora.0010@gmail.com to start the gpu)
 
-🚀 Getting Started
+## 🚀 Getting Started
 
 
 ## To setup the .ipynb file (FOR GPU)
@@ -57,21 +64,11 @@ npm i
 
 nodemon index2.js
 
- Tech Stack
-Frontend: HTML, CSS, JavaScript, EJS
+## 🛠️ **Tech Stack**
 
-Backend: Node.js, Express.js
-
-Database: MongoDB
-
-APIs & Services:
-
-Azure Speech API – for phoneme detection and pronunciation scoring
-
-LLaMA 3 – for generating personalized, phoneme-focused speech exercises
-
-Other Tools:
-
-Chart.js (or equivalent) for progress visualization
-
-Animation libraries for interactive chapter popups and fantasy theming
+- **Frontend:** HTML, CSS, JavaScript, EJS  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB  
+- **APIs & Services:**  
+  - **Azure Speech API** – for phoneme detection and pronunciation scoring  
+  - **LLaMA 3** – for generating personalized speech therapy content  
